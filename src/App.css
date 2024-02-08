@@ -46,6 +46,10 @@
   padding-left: 10px;
 }
 
+input, select {
+  background-color: white !important;
+}
+
 .input {
   flex: 1;
   margin-right: 10px;

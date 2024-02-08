@@ -17,8 +17,8 @@ function UserInfo({ setShowStep, setUserInfo }) {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [checkboxes, setCheckboxes] = useState([
-    { label: "Checkbox 1", checked: false },
-    { label: "Checkbox 2", checked: false },
+    { label: "Checkbox 1", checked: true },
+    { label: "Checkbox 2", checked: true },
   ]);
 
   const handleCheckboxChange = (index) => (event) => {
@@ -76,6 +76,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
         {checkboxes.map((checkbox, index) => (
           <div className="row left">
             <FormControlLabel
+              sx={{ fontWeight: 'bolder'}}
               key={index}
               control={
                 <Checkbox

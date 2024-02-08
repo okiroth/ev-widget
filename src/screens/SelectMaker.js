@@ -36,7 +36,7 @@ function SelectMaker({ setShowStep, setSelection }) {
         <div className="row">
           <div className="column">
             <InputLabel>Maker</InputLabel>
-            <Select value={maker} onChange={(e) => setMaker(e.target.value)}>
+            <Select sx={{ backgroundColor: 'white' }} value={maker} onChange={(e) => setMaker(e.target.value)}>
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
@@ -44,7 +44,7 @@ function SelectMaker({ setShowStep, setSelection }) {
           </div>
           <div className="column">
             <InputLabel>Model</InputLabel>
-            <Select value={model} onChange={(e) => setModel(e.target.value)}>
+            <Select sx={{ backgroundColor: 'white' }} value={model} onChange={(e) => setModel(e.target.value)}>
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
