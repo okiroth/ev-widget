@@ -5,6 +5,9 @@
 
 .top_section {
   background-color: white;
+  padding: 20px;
+  border: 1px solid #D8D9DA;
+  border-bottom: none;
 }
 
 .steps_section {

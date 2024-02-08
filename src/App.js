@@ -4,6 +4,7 @@ import ScreenSelectMaker from './screens/SelectMaker';
 import ScreenNoMaker from './screens/NoMaker';
 import ScreenUserInfo from './screens/UserInfo';
 import ScreenSubmitted from './screens/Submitted';
+import TopSection from './components/TopSection';
 
 const STEPS = {
   'SELECT_MAKER': 0,
@@ -20,7 +21,7 @@ function App() {
   return (
     <div className="wrapper">
       <div className="top_section">
-        Here goes the image
+        <TopSection />
       </div>
       <div className="steps_section">
         {showStep === STEPS.SELECT_MAKER && <ScreenSelectMaker setShowStep={setShowStep} setSelection={setSelection} />}
