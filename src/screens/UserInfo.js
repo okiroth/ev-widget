@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { APP_THEME, STEPS } from "../App";
 
-function UserInfo({setShowStep, setUserInfo}) {
+function UserInfo({ setShowStep, setUserInfo }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -102,11 +102,22 @@ function UserInfo({setShowStep, setUserInfo}) {
           </div>
         </div>
 
+        <div className="row center">
+          <div className="column">
+            <div className="disclaimer">
+              By clicking submit, I authorize dealers that I select to contact
+              me by phone or email. Carrier fees and charges may apply
+            </div>
+          </div>
+        </div>
+
         <div className="row left">
-          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKER)}>Go back</div>
+          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKER)}>
+            Go back
+          </div>
         </div>
       </div>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 }
 
