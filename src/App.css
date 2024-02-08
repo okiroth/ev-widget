@@ -5,56 +5,63 @@
 
 .top_section {
   background-color: white;
-  padding: 20px;
-  border: 1px solid #D8D9DA;
+  padding: 5px 20px;
+  border: 1px solid #d8d9da;
   border-bottom: none;
 }
 
 .steps_section {
   background-color: #eff6ff;
-  border: 1px solid #D8D9DA;
+  border: 1px solid #d8d9da;
 }
 .container {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 50px;
-  }
-  
-  .row {
-    display: flex;
-    justify-content: center;
-    margin: 5px;
-  }
+  display: flex;
+  flex-direction: column;
+  margin: 10px 50px;
+}
 
-  .column {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    padding: 10px;
-  }
+.row {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+}
 
-  .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 10px;
+}
 
-  .left {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 10px;
-  }
-  
-  .input {
-    flex: 1;
-    margin-right: 10px;
-  }
-  
-  .input:last-child {
-    margin-right: 0;
-  }
-  
-  .button {
-    flex: 1;
-  }
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.input:last-child {
+  margin-right: 0;
+}
+
+.button {
+  flex: 1;
+}
+
+.link {
+  font-size: small;
+  color: #2081F3;
+  text-decoration: underline;
+  cursor: pointer;
+}

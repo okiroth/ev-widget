@@ -6,9 +6,11 @@ import {
   InputLabel,
   Checkbox,
   FormControlLabel,
+  ThemeProvider,
 } from "@mui/material";
+import { APP_THEME, STEPS } from "../App";
 
-function UserInfo() {
+function UserInfo({setShowStep, setUserInfo}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,19 +32,12 @@ function UserInfo() {
       setError("Please fill out all required fields.");
       return;
     }
-
     setError("");
-    console.log("Form submitted:", {
-      firstName,
-      lastName,
-      email,
-      phone,
-      checkboxes,
-    });
+    setUserInfo({ firstName, lastName, email, phone, checkboxes });
   };
 
   return (
-    <div>
+    <ThemeProvider theme={APP_THEME}>
       <div className="container">
         <div className="row">
           <div className="column">
@@ -106,9 +101,12 @@ function UserInfo() {
             </Button>
           </div>
         </div>
-        
+
+        <div className="row left">
+          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKER)}>Go back</div>
+        </div>
       </div>
-    </div>
+      </ThemeProvider>
   );
 }
 

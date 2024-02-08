@@ -6,8 +6,9 @@ import {
   InputLabel,
   TextField,
   FormHelperText,
+  ThemeProvider,
 } from "@mui/material";
-import { STEPS } from "../App";
+import { APP_THEME, STEPS } from "../App";
 
 function SelectMaker({ setShowStep, setSelection }) {
   const [maker, setMaker] = useState("");
@@ -30,7 +31,7 @@ function SelectMaker({ setShowStep, setSelection }) {
   };
 
   return (
-    <div>
+    <ThemeProvider theme={APP_THEME}>
       <div className="container">
         <div className="row">
           <div className="column">
@@ -72,7 +73,7 @@ function SelectMaker({ setShowStep, setSelection }) {
           </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 

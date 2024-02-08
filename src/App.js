@@ -5,6 +5,8 @@ import ScreenNoMaker from './screens/NoMaker';
 import ScreenUserInfo from './screens/UserInfo';
 import ScreenSubmitted from './screens/Submitted';
 import TopSection from './components/TopSection';
+import { Button, createTheme, ThemeProvider } from '@mui/material';
+
 
 const STEPS = {
   'SELECT_MAKER': 0,
@@ -12,6 +14,14 @@ const STEPS = {
   'USER_INFO': 2,
   'SUBMITTED': 3
 }
+
+const APP_THEME = createTheme({
+  palette: {
+    primary: {
+      main: '#2081F3',
+    },
+  },
+});
 
 function App() {
   const [showStep, setShowStep] = useState(STEPS.SELECT_MAKER);
@@ -35,3 +45,4 @@ function App() {
 
 export default App;
 export { STEPS };
+export { APP_THEME };
