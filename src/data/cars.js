@@ -1,3 +1,11 @@
+// The CSV is the direct download from
+// https://docs.google.com/spreadsheets/d/1Xifx_6hkbYCXAYAR0IWlZEn40fi56a9k8q8_stU6pr4/edit#gid=0
+// and paste it into the CARS_DATA variable
+//
+// !!!!! REMOVE THE FIRST LINE of the CSV !!!!!
+//
+//
+export const CARS_DATA = `
 Audi,e-tron Sportback,"$75,195",78,77,80,225,Audi_e-tron_Sportback.jpg
 Audi,e-tron,"$71,995",79,78,79,226,Audi_e-tron.jpg
 Audi,e-tron GT,"$106,395",82,81,83,238,Audi_e-tron_GT.jpg
@@ -44,3 +52,4 @@ Toyota,bZ4X,"$43,335",119,131,107,252,Toyota_bZ4X.jpg
 Volkswagen,ID.4,"$40,290",107,115,99,209,Volkswagen_ID.4.jpg
 Volvo,XC40 Recharge,"$54,645",85,92,79,223,Volvo_XC40_Recharge.jpg
 Volvo,C40 Recharge,"$56,395",87,94,80,226,Volvo_C40_Recharge.jpg
+`;

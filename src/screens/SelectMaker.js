@@ -9,6 +9,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
+import { CARS_DATA } from "../data/cars";
 
 function SelectMaker({ setShowStep, setSelection }) {
   const [maker, setMaker] = useState("");
@@ -26,21 +27,17 @@ function SelectMaker({ setShowStep, setSelection }) {
 
   // The CSV is the direct download from
   // https://docs.google.com/spreadsheets/d/1Xifx_6hkbYCXAYAR0IWlZEn40fi56a9k8q8_stU6pr4/edit#gid=0
-  ///
-  ///
+  // and paste it into the CARS_DATA variable
+  //
   // !!!!! REMOVE THE FIRST LINE of the CSV !!!!!
-  ///
-  ///
+  //
+  //
   useEffect(() => {
-    fetch("/data/cars.csv")
-      .then((response) => response.text())
-      .then((data) => {
-        const lines = data.split("\n");
-        lines.forEach((line) => {
-          const [maker, model] = line.split(",");
-          setCars((prev) => [...prev, { maker, model }]);
-        });
-      });
+    const lines = CARS_DATA.split("\n");
+    lines.forEach((line) => {
+      const [maker, model] = line.split(",");
+      setCars((prev) => [...prev, { maker, model }]);
+    });
   }, []);
 
   // This checks for unique makers
