@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
-  Typography,
   InputLabel,
   Checkbox,
   FormControlLabel,
@@ -11,23 +10,34 @@ import {
 import { APP_THEME, STEPS } from "../App";
 import { ApiHandler } from "../ApiHandler";
 
-function UserInfo({ setShowStep, setUserInfo }) {
+function UserInfo({ setShowStep, setUserInfo, dealerships }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [checkboxes, setCheckboxes] = useState([
-    { label: "Checkbox 1", checked: false },
-    { label: "Checkbox 2", checked: false },
-  ]);
+  const [checkboxes, setCheckboxes] = useState([]);
 
   const handleCheckboxChange = (index) => (event) => {
     const newCheckboxes = [...checkboxes];
     newCheckboxes[index].checked = event.target.checked;
     setCheckboxes(newCheckboxes);
   };
+
+  useEffect(() => {
+    setError("");
+  }, [firstName, lastName, email, phone, checkboxes]);
+
+  useEffect(() => {
+    setCheckboxes(
+      dealerships.map((dealer) => ({
+        label: `${dealer.name} (${dealer.distance} miles)`,
+        value: dealer.reservationId,
+        checked: false,
+      }))
+    );
+  }, [dealerships]);
 
   const handleSubmit = (event) => {
     if (!firstName || !lastName || !email) {
@@ -37,6 +47,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
     setLoading(true);
     setError("");
     setUserInfo({ firstName, lastName, email, phone, checkboxes });
+
     // TODO replace sleep with the actual ping
     ApiHandler.sleep().then(() => {
       setShowStep(STEPS.SELECT_MAKE);
@@ -91,25 +102,27 @@ function UserInfo({ setShowStep, setUserInfo }) {
         {error && <div className="error">{error}</div>}
 
         <div className="row-spacer">
-          <div className="subtitle" style={{marginBottom: 10}}>We’ve found the following qualified dealerships near you:</div>
+          <div className="subtitle" style={{ marginBottom: 10 }}>
+            We’ve found the following qualified dealerships near you:
+          </div>
           {checkboxes.map((checkbox, index) => (
             <div key={index} className="left">
               <FormControlLabel
                 sx={{
-                  '& .MuiCheckbox-root' : {
-                    padding: '5px 0',
+                  "& .MuiCheckbox-root": {
+                    padding: "5px 0",
                   },
-                  '& .MuiTypography-root': {
-                    fontWeight: 'bold',
+                  "& .MuiTypography-root": {
+                    fontWeight: "bold",
                   },
                 }}
                 control={
                   <Checkbox
-                  sx={{
-                    '& .MuiSvgIcon-root': {
-                      fontSize: '2rem', 
-                    },
-                  }}
+                    sx={{
+                      "& .MuiSvgIcon-root": {
+                        fontSize: "2rem",
+                      },
+                    }}
                     checked={checkbox.checked}
                     onChange={handleCheckboxChange(index)}
                   />

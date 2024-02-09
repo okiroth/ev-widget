@@ -7,16 +7,15 @@ import {
   TextField,
   FormHelperText,
   ThemeProvider,
-  Typography,
 } from "@mui/material";
 import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
 import { CARS_DATA } from "../data/cars";
 import { ApiHandler } from "../ApiHandler";
 
-function SelectMake({ setShowStep, setSelection, setDealerships }) {
-  const [make, setMake] = useState("");
-  const [model, setModel] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
+  const [make, setMake] = useState(selection.make || "");
+  const [model, setModel] = useState(selection.model || "");
+  const [postalCode, setPostalCode] = useState(selection.postalCode || "");
   const [errorpostalCode, setErrorPostalCode] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,6 +51,10 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
     setModels(uniqueModels);
   }, [cars, make]);
 
+  useEffect(() => {
+    setError("");
+  }, [make, model, postalCode]);
+
   const handleSubmit = () => {
     if (!make || !model) {
       setError("Please fill out all required fields.");
@@ -69,8 +72,8 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
     setErrorPostalCode(false);
     setSelection({ make, model, postalCode });
 
-    // TODO replace sleep with the actual ping
-    ApiHandler.sleep({ make, model, postalCode }).then(() => {
+    ApiHandler.newCarPingDummy({ make, model, postalCode }).then((res) => {
+      setDealerships(res.dealers);
       setShowStep(STEPS.USER_INFO);
       setLoading(false);
     });

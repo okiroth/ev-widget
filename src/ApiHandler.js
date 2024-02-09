@@ -12,7 +12,7 @@ export const ApiHandler = {
     });
 
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: myHeaders,
       body: raw,
       redirect: "follow",
@@ -21,8 +21,17 @@ export const ApiHandler = {
     return fetch(
       "https://test.detroittradingexchange.com/api/v2/NewCar/Ping",
       requestOptions
-    )
-      .then((result) => console.log(result))
+    ) 
+      .then((response) => response.text())
+      .then((text) => JSON.parse(text))
+      .then(json => console.log(json))
+      .catch((error) => console.log("error", error));
+  },
+
+  newCarPingDummy: async (data) => {
+    return fetch("/newCarPing.html") 
+      .then((response) => response.text())
+      .then((text) => JSON.parse(text))
       .catch((error) => console.log("error", error));
   },
 
