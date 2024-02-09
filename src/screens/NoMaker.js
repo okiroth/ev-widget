@@ -1,5 +1,5 @@
 import React from 'react';
-import ScreenSelectMaker from './SelectMaker';
+import ScreenSelectMaker from './SelectMake';
 
 function NotMaker({ setShowStep }) {
 

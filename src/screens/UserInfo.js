@@ -45,6 +45,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
             <TextField
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
             />
           </div>
           <div className="column">
@@ -52,6 +53,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
             <TextField
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
             />
           </div>
         </div>
@@ -62,6 +64,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
             />
           </div>
           <div className="column">
@@ -69,6 +72,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
             <TextField
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
             />
           </div>
         </div>

@@ -10,20 +10,20 @@ import {
 } from "@mui/material";
 import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
 import { CARS_DATA } from "../data/cars";
+import { ApiHandler } from "../ApiHandler";
 
-function SelectMaker({ setShowStep, setSelection }) {
-  const [maker, setMaker] = useState("");
+function SelectMake({ setShowStep, setSelection, setDealerships }) {
+  const [make, setMake] = useState("");
   const [model, setModel] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [errorZipcode, setErrorZipcode] = useState(false);
+  const [postalCode, setPostalCode] = useState("");
+  const [errorpostalCode, setErrorPostalCode] = useState(false);
 
-  const [makers, setMakers] = useState([]);
+  const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
 
   const [cars, setCars] = useState([]);
 
-  const zipCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
-
+  const postalCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
   // The CSV is the direct download from
   // https://docs.google.com/spreadsheets/d/1Xifx_6hkbYCXAYAR0IWlZEn40fi56a9k8q8_stU6pr4/edit#gid=0
@@ -35,37 +35,42 @@ function SelectMaker({ setShowStep, setSelection }) {
   useEffect(() => {
     const lines = CARS_DATA.split("\n");
     lines.forEach((line) => {
-      const [maker, model] = line.split(",");
-      setCars((prev) => [...prev, { maker, model }]);
+      const [make, model] = line.split(",");
+      setCars((prev) => [...prev, { make, model }]);
     });
   }, []);
 
-  // This checks for unique makers
+  // This checks for unique makes
   useEffect(() => {
-    const uniqueMakers = [...new Set(cars.map((car) => car.maker))].map(
-      (maker) => ({ value: maker, label: maker })
+    const uniqueMakes = [...new Set(cars.map((car) => car.make))].map(
+      (make) => ({ value: make, label: make })
     );
-    setMakers(uniqueMakers);
+    setMakes(uniqueMakes);
   }, [cars]);
-  
-  // This checks for unique models after the maker is selected
+
+  // This checks for unique models after the make is selected
   useEffect(() => {
     const uniqueModels = [
       ...new Set(
-        cars.filter((car) => car.maker === maker).map((car) => car.model)
+        cars.filter((car) => car.make === make).map((car) => car.model)
       ),
     ].map((model) => ({ value: model, label: model }));
     setModels(uniqueModels);
-  }, [cars, maker]);
+  }, [cars, make]);
 
   const handleSubmit = () => {
-    if (maker && model && zipcode) {
-      if (zipCodeRegex.test(zipcode)) {
-        setErrorZipcode(false);
-        setShowStep(STEPS.USER_INFO);
-        setSelection({ maker, model, zipcode });
+    if (make && model && postalCode) {
+      if (postalCodeRegex.test(postalCode)) {
+        setErrorPostalCode(false);
+        setSelection({ make, model, postalCode });
+
+        // TODO replace sleep with the actual ping
+        ApiHandler.sleep({make, model, postalCode}).then(() => {
+          setShowStep(STEPS.USER_INFO);
+        }); 
+
       } else {
-        setErrorZipcode(true);
+        setErrorPostalCode(true);
       }
     }
   };
@@ -75,15 +80,15 @@ function SelectMaker({ setShowStep, setSelection }) {
       <div className="container">
         <div className="row">
           <div className="column">
-            <InputLabel>Maker</InputLabel>
+            <InputLabel>Make</InputLabel>
             <Select
               sx={INPUT_PLACEHOLDER}
-              value={maker}
-              onChange={(e) => setMaker(e.target.value)}
+              value={make}
+              onChange={(e) => setMake(e.target.value)}
             >
-              {makers.map((maker, index) => (
-                <MenuItem key={index} value={maker.value}>
-                  {maker.label}
+              {makes.map((make, index) => (
+                <MenuItem key={index} value={make.value}>
+                  {make.label}
                 </MenuItem>
               ))}
             </Select>
@@ -106,11 +111,11 @@ function SelectMaker({ setShowStep, setSelection }) {
             <InputLabel>Zip Code</InputLabel>
             <TextField
               placeholder="12345"
-              value={zipcode}
-              onChange={(e) => setZipcode(e.target.value)}
-              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
-            {errorZipcode && <FormHelperText>Invalid Zip Code</FormHelperText>}
+            {errorpostalCode && <FormHelperText>Invalid Zip Code</FormHelperText>}
           </div>
         </div>
         <div className="row center">
@@ -131,4 +136,4 @@ function SelectMaker({ setShowStep, setSelection }) {
   );
 }
 
-export default SelectMaker;
+export default SelectMake;
