@@ -111,6 +111,7 @@ function SelectMaker({ setShowStep, setSelection }) {
               placeholder="12345"
               value={zipcode}
               onChange={(e) => setZipcode(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
             />
             {errorZipcode && <FormHelperText>Invalid Zip Code</FormHelperText>}
           </div>
