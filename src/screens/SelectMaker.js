@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Select,
   MenuItem,
@@ -16,7 +16,42 @@ function SelectMaker({ setShowStep, setSelection }) {
   const [zipcode, setZipcode] = useState("");
   const [errorZipcode, setErrorZipcode] = useState(false);
 
+  const [makers, setMakers] = useState([]);
+  const [models, setModels] = useState([]);
+
+  const [cars, setCars] = useState([]);
+
   const zipCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
+
+  useEffect(() => {
+    fetch("/data/cars.csv")
+      .then((response) => response.text())
+      .then((data) => {
+        const lines = data.split("\n");
+        lines.forEach((line) => {
+          const [maker, model] = line.split(",");
+          setCars((prev) => [...prev, { maker, model }]);
+        });
+      });
+  }, []);
+
+  // This checks for unique makers
+  useEffect(() => {
+    const uniqueMakers = [...new Set(cars.map((car) => car.maker))].map(
+      (maker) => ({ value: maker, label: maker })
+    );
+    setMakers(uniqueMakers);
+  }, [cars]);
+  
+  // This checks for unique models after the maker is selected
+  useEffect(() => {
+    const uniqueModels = [
+      ...new Set(
+        cars.filter((car) => car.maker === maker).map((car) => car.model)
+      ),
+    ].map((model) => ({ value: model, label: model }));
+    setModels(uniqueModels);
+  }, [cars, maker]);
 
   const handleSubmit = () => {
     if (maker && model && zipcode) {
@@ -36,18 +71,30 @@ function SelectMaker({ setShowStep, setSelection }) {
         <div className="row">
           <div className="column">
             <InputLabel>Maker</InputLabel>
-            <Select sx={{ backgroundColor: 'white' }} value={maker} onChange={(e) => setMaker(e.target.value)}>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+            <Select
+              sx={{ backgroundColor: "white" }}
+              value={maker}
+              onChange={(e) => setMaker(e.target.value)}
+            >
+              {makers.map((maker, index) => (
+                <MenuItem key={index} value={maker.value}>
+                  {maker.label}
+                </MenuItem>
+              ))}
             </Select>
           </div>
           <div className="column">
             <InputLabel>Model</InputLabel>
-            <Select sx={{ backgroundColor: 'white' }} value={model} onChange={(e) => setModel(e.target.value)}>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+            <Select
+              sx={{ backgroundColor: "white" }}
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
+            >
+              {models.map((model, index) => (
+                <MenuItem key={index} value={model.value}>
+                  {model.label}
+                </MenuItem>
+              ))}
             </Select>
           </div>
           <div className="column">
