@@ -5,7 +5,7 @@ import ScreenNoMaker from './screens/NoMaker';
 import ScreenUserInfo from './screens/UserInfo';
 import ScreenSubmitted from './screens/Submitted';
 import TopSection from './components/TopSection';
-import { Button, createTheme, ThemeProvider } from '@mui/material';
+import { createTheme } from '@mui/material';
 
 
 const STEPS = {
@@ -21,7 +21,25 @@ const APP_THEME = createTheme({
       main: '#2081F3',
     },
   },
+  components: {
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'white',
+        },
+      },
+    },
+  },
 });
+
+const INPUT_PLACEHOLDER = {
+  '& .MuiSelect-select .notranslate::after': 'Select'
+      ? {
+          content: '"Select"',
+          opacity: 0.42,
+        }
+      : {},
+}
 
 function App() {
   const [showStep, setShowStep] = useState(STEPS.SELECT_MAKER);
@@ -46,3 +64,4 @@ function App() {
 export default App;
 export { STEPS };
 export { APP_THEME };
+export { INPUT_PLACEHOLDER };

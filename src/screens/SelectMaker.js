@@ -8,7 +8,7 @@ import {
   FormHelperText,
   ThemeProvider,
 } from "@mui/material";
-import { APP_THEME, STEPS } from "../App";
+import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
 
 function SelectMaker({ setShowStep, setSelection }) {
   const [maker, setMaker] = useState("");
@@ -23,6 +23,14 @@ function SelectMaker({ setShowStep, setSelection }) {
 
   const zipCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
+
+  // The CSV is the direct download from
+  // https://docs.google.com/spreadsheets/d/1Xifx_6hkbYCXAYAR0IWlZEn40fi56a9k8q8_stU6pr4/edit#gid=0
+  ///
+  ///
+  // !!!!! REMOVE THE FIRST LINE of the CSV !!!!!
+  ///
+  ///
   useEffect(() => {
     fetch("/data/cars.csv")
       .then((response) => response.text())
@@ -72,7 +80,7 @@ function SelectMaker({ setShowStep, setSelection }) {
           <div className="column">
             <InputLabel>Maker</InputLabel>
             <Select
-              sx={{ backgroundColor: "white" }}
+              sx={INPUT_PLACEHOLDER}
               value={maker}
               onChange={(e) => setMaker(e.target.value)}
             >
@@ -86,7 +94,7 @@ function SelectMaker({ setShowStep, setSelection }) {
           <div className="column">
             <InputLabel>Model</InputLabel>
             <Select
-              sx={{ backgroundColor: "white" }}
+              sx={INPUT_PLACEHOLDER}
               value={model}
               onChange={(e) => setModel(e.target.value)}
             >
@@ -100,6 +108,7 @@ function SelectMaker({ setShowStep, setSelection }) {
           <div className="column">
             <InputLabel>Zip Code</InputLabel>
             <TextField
+              placeholder="12345"
               value={zipcode}
               onChange={(e) => setZipcode(e.target.value)}
             />
