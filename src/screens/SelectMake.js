@@ -57,6 +57,7 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
       setError("Please fill out all required fields.");
       return;
     }
+    setError("");
     if (!postalCodeRegex.test(postalCode)) {
       setErrorPostalCode(true);
       return;
@@ -124,7 +125,7 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
           <div className="column">
             {error && <div className="error">{error}</div>}
             <Button
-              className="button"
+              className="submit-button"
               variant="contained"
               color="primary"
               sx={{ fontWeight: "bold", padding: 1.5 }}

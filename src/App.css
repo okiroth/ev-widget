@@ -26,6 +26,10 @@
   margin: 10px 0;
 }
 
+.row-spacer {
+  margin: 10px 0;
+}
+
 .column {
   display: flex;
   flex: 1;
@@ -60,8 +64,9 @@ select {
   margin-right: 0;
 }
 
-.button {
+.submit-button {
   flex: 1;
+  margin-top: 20px !important;
 }
 
 .link {
@@ -107,7 +112,9 @@ select {
 .error {
   font-size: small;
   color: red;
-  margin-bottom: 10px;
+  position: relative;
+  top: -13px;
+  height: 0;
 }
 
 .spinner {

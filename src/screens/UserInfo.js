@@ -41,7 +41,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
     ApiHandler.sleep().then(() => {
       setShowStep(STEPS.SELECT_MAKE);
       setLoading(false);
-    }); 
+    });
   };
 
   return (
@@ -53,7 +53,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
             <TextField
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
           <div className="column">
@@ -61,7 +61,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
             <TextField
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
         </div>
@@ -72,7 +72,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
           <div className="column">
@@ -80,36 +80,39 @@ function UserInfo({ setShowStep, setUserInfo }) {
             <TextField
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              onKeyDown={(e) => (e.key === "Enter") && handleSubmit()}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
         </div>
-        {checkboxes.map((checkbox, index) => (
-          <div key={index} className="left">
-            <FormControlLabel
-              sx={{ fontWeight: 'bolder'}}
-              control={
-                <Checkbox
-                  checked={checkbox.checked}
-                  onChange={handleCheckboxChange(index)}
-                />
-              }
-              label={checkbox.label}
-            />
-          </div>
-        ))}
+
+        <div className="row-spacer">
+          {checkboxes.map((checkbox, index) => (
+            <div key={index} className="left">
+              <FormControlLabel
+                sx={{ fontWeight: "bolder" }}
+                control={
+                  <Checkbox
+                    checked={checkbox.checked}
+                    onChange={handleCheckboxChange(index)}
+                  />
+                }
+                label={checkbox.label}
+              />
+            </div>
+          ))}
+        </div>
 
         <div className="row center">
           <div className="column">
             {error && <div className="error">{error}</div>}
             <Button
-              className="button"
+              className="submit-button"
               variant="contained"
               color="primary"
               sx={{ fontWeight: "bold", padding: 1.5 }}
               onClick={handleSubmit}
-              >
-              {loading ? <div className="spinner"></div> : 'SUBMIT'}
+            >
+              {loading ? <div className="spinner"></div> : "SUBMIT"}
             </Button>
           </div>
         </div>
