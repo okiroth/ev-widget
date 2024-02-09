@@ -1,5 +1,6 @@
 .wrapper {
   padding-bottom: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .top_section {
@@ -87,16 +88,16 @@ select {
   color: #000;
   font-size: 22px !important;
   font-style: normal;
-  font-weight: 500 !important;
+  font-weight: 600;
   line-height: 120%; /* 26.4px */
   margin-bottom: 16px;
 }
 
 .subtitle {
   color: #000;
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-style: normal;
-  font-weight: 400 !important;
+  font-weight: 400;
   line-height: 120%; /* 19.2px */
 }
 
@@ -104,7 +105,7 @@ select {
   color: #000;
   font-size: 13px !important;
   font-style: normal;
-  font-weight: 400 !important;
+  font-weight: 400;
   line-height: 120%; /* 15.6px */
   margin-bottom: 8px;
 }
