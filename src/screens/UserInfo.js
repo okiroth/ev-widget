@@ -19,8 +19,8 @@ function UserInfo({ setShowStep, setUserInfo }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [checkboxes, setCheckboxes] = useState([
-    { label: "Checkbox 1", checked: true },
-    { label: "Checkbox 2", checked: true },
+    { label: "Checkbox 1", checked: false },
+    { label: "Checkbox 2", checked: false },
   ]);
 
   const handleCheckboxChange = (index) => (event) => {
@@ -51,6 +51,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
           <div className="column">
             <InputLabel className="label">First Name *</InputLabel>
             <TextField
+              placeholder="Jhon"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
@@ -59,6 +60,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
           <div className="column">
             <InputLabel className="label">Last Name *</InputLabel>
             <TextField
+              placeholder="Smith"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
@@ -69,6 +71,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
           <div className="column">
             <InputLabel className="label">Email *</InputLabel>
             <TextField
+              placeholder="jsmith@gmail.com"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -78,20 +81,35 @@ function UserInfo({ setShowStep, setUserInfo }) {
           <div className="column">
             <InputLabel className="label">Phone</InputLabel>
             <TextField
+              placeholder="123-456-7890"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
         </div>
+        {error && <div className="error">{error}</div>}
 
         <div className="row-spacer">
+          <div className="subtitle" style={{marginBottom: 10}}>We’ve found the following qualified dealerships near you:</div>
           {checkboxes.map((checkbox, index) => (
             <div key={index} className="left">
               <FormControlLabel
-                sx={{ fontWeight: "bolder" }}
+                sx={{
+                  '& .MuiCheckbox-root' : {
+                    padding: '5px 0',
+                  },
+                  '& .MuiTypography-root': {
+                    fontWeight: 'bold',
+                  },
+                }}
                 control={
                   <Checkbox
+                  sx={{
+                    '& .MuiSvgIcon-root': {
+                      fontSize: '2rem', 
+                    },
+                  }}
                     checked={checkbox.checked}
                     onChange={handleCheckboxChange(index)}
                   />
@@ -104,7 +122,6 @@ function UserInfo({ setShowStep, setUserInfo }) {
 
         <div className="row center">
           <div className="column">
-            {error && <div className="error">{error}</div>}
             <Button
               className="submit-button"
               variant="contained"
