@@ -4,7 +4,7 @@
 
 .top_section {
   background-color: white;
-  padding: 5px calc(5% + 5px);
+  padding: 10px calc(7% + 5px);
   border: 1px solid #d8d9da;
   border-bottom: none;
 }
@@ -13,16 +13,17 @@
   background-color: #eff6ff;
   border: 1px solid #d8d9da;
 }
+
 .container {
   display: flex;
   flex-direction: column;
-  margin: 10px 5%;
+  margin: 30px 7%;
 }
 
 .row {
   display: flex;
   justify-content: center;
-  margin: 5px;
+  margin: 10px 0;
 }
 
 .column {
@@ -45,7 +46,8 @@
   padding-left: 10px;
 }
 
-input, select {
+input,
+select {
   background-color: white !important;
 }
 
@@ -64,7 +66,7 @@ input, select {
 
 .link {
   font-size: small;
-  color: #2081F3;
+  color: #2081f3;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -74,4 +76,51 @@ input, select {
   font-style: italic;
   color: #6e6e6e;
   margin: 10px 0;
-} 
+}
+
+.title {
+  color: #000;
+  font-size: 22px !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  line-height: 120%; /* 26.4px */
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  color: #000;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  line-height: 120%; /* 19.2px */
+}
+
+.label {
+  color: #000;
+  font-size: 13px !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  line-height: 120%; /* 15.6px */
+  margin-bottom: 8px;
+}
+
+.error {
+  font-size: small;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border-left-color: #2288ff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

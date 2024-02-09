@@ -9,7 +9,7 @@ import { createTheme } from '@mui/material';
 
 
 const STEPS = {
-  'SELECT_MAKER': 0,
+  'SELECT_MAKE': 0,
   'NO_MAKER': 1,
   'USER_INFO': 2,
   'SUBMITTED': 3
@@ -42,7 +42,7 @@ const INPUT_PLACEHOLDER = {
 }
 
 function App() {
-  const [showStep, setShowStep] = useState(STEPS.SELECT_MAKER);
+  const [showStep, setShowStep] = useState(STEPS.SELECT_MAKE);
   const [selection, setSelection] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [dealerships, setDealerships] = useState([{ name: 'Dealer 1', distance: 5 }, { name: 'Dealer 2', distance: 10 }]);  
@@ -53,7 +53,7 @@ function App() {
         <TopSection />
       </div>
       <div className="steps_section">
-        {showStep === STEPS.SELECT_MAKER && <ScreenSelectMaker setShowStep={setShowStep} setSelection={setSelection} />}
+        {showStep === STEPS.SELECT_MAKE && <ScreenSelectMaker setShowStep={setShowStep} setSelection={setSelection} />}
         {showStep === STEPS.NO_MAKER && <ScreenNoMaker setShowStep={setShowStep}  />}
         {showStep === STEPS.USER_INFO && <ScreenUserInfo setShowStep={setShowStep} setUserInfo={setUserInfo}/>}
         {showStep === STEPS.SUBMITTED && <ScreenSubmitted setShowStep={setShowStep} />}

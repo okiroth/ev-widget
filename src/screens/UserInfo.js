@@ -9,6 +9,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { APP_THEME, STEPS } from "../App";
+import { ApiHandler } from "../ApiHandler";
 
 function UserInfo({ setShowStep, setUserInfo }) {
   const [firstName, setFirstName] = useState("");
@@ -16,6 +17,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [checkboxes, setCheckboxes] = useState([
     { label: "Checkbox 1", checked: true },
     { label: "Checkbox 2", checked: true },
@@ -32,8 +34,14 @@ function UserInfo({ setShowStep, setUserInfo }) {
       setError("Please fill out all required fields.");
       return;
     }
+    setLoading(true);
     setError("");
     setUserInfo({ firstName, lastName, email, phone, checkboxes });
+    // TODO replace sleep with the actual ping
+    ApiHandler.sleep().then(() => {
+      setShowStep(STEPS.SELECT_MAKE);
+      setLoading(false);
+    }); 
   };
 
   return (
@@ -41,7 +49,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
       <div className="container">
         <div className="row">
           <div className="column">
-            <InputLabel>First Name *</InputLabel>
+            <InputLabel className="label">First Name *</InputLabel>
             <TextField
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -49,7 +57,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
             />
           </div>
           <div className="column">
-            <InputLabel>Last Name *</InputLabel>
+            <InputLabel className="label">Last Name *</InputLabel>
             <TextField
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
@@ -59,7 +67,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
         </div>
         <div className="row">
           <div className="column">
-            <InputLabel>Email *</InputLabel>
+            <InputLabel className="label">Email *</InputLabel>
             <TextField
               type="email"
               value={email}
@@ -68,7 +76,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
             />
           </div>
           <div className="column">
-            <InputLabel>Phone</InputLabel>
+            <InputLabel className="label">Phone</InputLabel>
             <TextField
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -76,12 +84,10 @@ function UserInfo({ setShowStep, setUserInfo }) {
             />
           </div>
         </div>
-        {error && <Typography color="error">{error}</Typography>}
         {checkboxes.map((checkbox, index) => (
-          <div className="row left">
+          <div key={index} className="left">
             <FormControlLabel
               sx={{ fontWeight: 'bolder'}}
-              key={index}
               control={
                 <Checkbox
                   checked={checkbox.checked}
@@ -95,14 +101,15 @@ function UserInfo({ setShowStep, setUserInfo }) {
 
         <div className="row center">
           <div className="column">
+            {error && <div className="error">{error}</div>}
             <Button
               className="button"
               variant="contained"
               color="primary"
               sx={{ fontWeight: "bold", padding: 1.5 }}
               onClick={handleSubmit}
-            >
-              SUBMIT
+              >
+              {loading ? <div className="spinner"></div> : 'SUBMIT'}
             </Button>
           </div>
         </div>
@@ -117,7 +124,7 @@ function UserInfo({ setShowStep, setUserInfo }) {
         </div>
 
         <div className="row left">
-          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKER)}>
+          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKE)}>
             Go back
           </div>
         </div>

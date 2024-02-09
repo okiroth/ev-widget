@@ -7,6 +7,7 @@ import {
   TextField,
   FormHelperText,
   ThemeProvider,
+  Typography,
 } from "@mui/material";
 import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
 import { CARS_DATA } from "../data/cars";
@@ -17,21 +18,14 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
   const [model, setModel] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [errorpostalCode, setErrorPostalCode] = useState(false);
-
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
-
   const [cars, setCars] = useState([]);
 
   const postalCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
-  // The CSV is the direct download from
-  // https://docs.google.com/spreadsheets/d/1Xifx_6hkbYCXAYAR0IWlZEn40fi56a9k8q8_stU6pr4/edit#gid=0
-  // and paste it into the CARS_DATA variable
-  //
-  // !!!!! REMOVE THE FIRST LINE of the CSV !!!!!
-  //
-  //
   useEffect(() => {
     const lines = CARS_DATA.split("\n");
     lines.forEach((line) => {
@@ -59,20 +53,26 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
   }, [cars, make]);
 
   const handleSubmit = () => {
-    if (make && model && postalCode) {
-      if (postalCodeRegex.test(postalCode)) {
-        setErrorPostalCode(false);
-        setSelection({ make, model, postalCode });
-
-        // TODO replace sleep with the actual ping
-        ApiHandler.sleep({make, model, postalCode}).then(() => {
-          setShowStep(STEPS.USER_INFO);
-        }); 
-
-      } else {
-        setErrorPostalCode(true);
-      }
+    if (!make || !model) {
+      setError("Please fill out all required fields.");
+      return;
     }
+    if (!postalCodeRegex.test(postalCode)) {
+      setErrorPostalCode(true);
+      return;
+    }
+
+    setLoading(true);
+
+    setError("");
+    setErrorPostalCode(false);
+    setSelection({ make, model, postalCode });
+
+    // TODO replace sleep with the actual ping
+    ApiHandler.sleep({ make, model, postalCode }).then(() => {
+      setShowStep(STEPS.USER_INFO);
+      setLoading(false);
+    });
   };
 
   return (
@@ -80,7 +80,7 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
       <div className="container">
         <div className="row">
           <div className="column">
-            <InputLabel>Make</InputLabel>
+            <InputLabel className="label">Make</InputLabel>
             <Select
               sx={INPUT_PLACEHOLDER}
               value={make}
@@ -94,7 +94,7 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
             </Select>
           </div>
           <div className="column">
-            <InputLabel>Model</InputLabel>
+            <InputLabel className="label">Model</InputLabel>
             <Select
               sx={INPUT_PLACEHOLDER}
               value={model}
@@ -108,18 +108,21 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
             </Select>
           </div>
           <div className="column">
-            <InputLabel>Zip Code</InputLabel>
+            <InputLabel className="label">Zip Code</InputLabel>
             <TextField
               placeholder="12345"
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
-            {errorpostalCode && <FormHelperText>Invalid Zip Code</FormHelperText>}
+            {errorpostalCode && (
+              <FormHelperText>Invalid Zip Code</FormHelperText>
+            )}
           </div>
         </div>
         <div className="row center">
           <div className="column">
+            {error && <div className="error">{error}</div>}
             <Button
               className="button"
               variant="contained"
@@ -127,7 +130,11 @@ function SelectMake({ setShowStep, setSelection, setDealerships }) {
               sx={{ fontWeight: "bold", padding: 1.5 }}
               onClick={handleSubmit}
             >
-              SHOW DEALERSHIPS NEAR YOU
+              {loading ? (
+                <div className="spinner"></div>
+              ) : (
+                "SHOW DEALERSHIPS NEAR YOU"
+              )}
             </Button>
           </div>
         </div>
