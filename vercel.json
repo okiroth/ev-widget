@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "https://production.detroittradingexchange.com/(.*)",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Access-Control-Allow-Credentials",
