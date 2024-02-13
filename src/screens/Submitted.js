@@ -22,7 +22,7 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
   }, [selection]);
 
   return (
-    <ThemeProvider theme={APP_THEME} className="blue-step">
+    <ThemeProvider theme={APP_THEME}>
       <div className="container">
         <div className="title">
           A qualified dealership will be in contact with you soon.

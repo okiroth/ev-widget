@@ -75,7 +75,7 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
     setSelection({ make, model, postalCode });
 
     ApiHandler.newCarPing({ make, model, postalCode }).then((res) => {
-      if (res.success) {
+      if (res?.success) {
         setDealerships(res.dealers);
         setShowStep(STEPS.USER_INFO);
       } else {
