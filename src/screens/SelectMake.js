@@ -22,6 +22,7 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
   const [cars, setCars] = useState([]);
+  const [noDealers, setNoDealers] = useState(false);
 
   const postalCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
@@ -53,6 +54,7 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
 
   useEffect(() => {
     setError("");
+    setNoDealers(false);
   }, [make, model, postalCode]);
 
   const handleSubmit = () => {
@@ -72,9 +74,13 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
     setErrorPostalCode(false);
     setSelection({ make, model, postalCode });
 
-    ApiHandler.newCarPingDummy({ make, model, postalCode }).then((res) => {
-      setDealerships(res.dealers);
-      setShowStep(STEPS.USER_INFO);
+    ApiHandler.newCarPing({ make, model, postalCode }).then((res) => {
+      if (res.success) {
+        setDealerships(res.dealers);
+        setShowStep(STEPS.USER_INFO);
+      } else {
+        setNoDealers(true);
+      }
       setLoading(false);
     });
   };
@@ -124,6 +130,7 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
             )}
           </div>
         </div>
+        <div className="row-spacer"></div>
         <div className="row center">
           <div className="column">
             {error && <div className="error">{error}</div>}
@@ -142,6 +149,13 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
             </Button>
           </div>
         </div>
+        <div className="row-spacer"></div>
+        {noDealers && (
+          <div className="row center subtitle">
+            We couldn’t find any nearby dealerships for that Make and Model.
+            Please update the vehicle or try another zip code.
+          </div>
+        )}
       </div>
     </ThemeProvider>
   );

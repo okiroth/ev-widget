@@ -33,14 +33,20 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
     setCheckboxes(
       dealerships.map((dealer) => ({
         label: `${dealer.name} (${dealer.distance} miles)`,
-        value: dealer.reservationId,
+        value: dealer.reservationID,
         checked: false,
       }))
     );
   }, [dealerships]);
 
   const handleSubmit = (event) => {
-    if (!firstName || !lastName || !email) {
+    const noDealers =
+      checkboxes.filter((checkbox) => checkbox.checked).length === 0;
+    if (noDealers) {
+      setError("Please select at least one dealership.");
+      return;
+    }
+    if (!firstName || !lastName || !email || !phone) {
       setError("Please fill out all required fields.");
       return;
     }
@@ -60,7 +66,7 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
       <div className="container blue-step">
         <div className="row">
           <div className="column">
-            <InputLabel className="label">First Name *</InputLabel>
+            <InputLabel className="label">First Name*</InputLabel>
             <TextField
               placeholder="Jhon"
               value={firstName}
@@ -69,7 +75,7 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
             />
           </div>
           <div className="column">
-            <InputLabel className="label">Last Name *</InputLabel>
+            <InputLabel className="label">Last Name*</InputLabel>
             <TextField
               placeholder="Smith"
               value={lastName}
@@ -80,7 +86,7 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
         </div>
         <div className="row">
           <div className="column">
-            <InputLabel className="label">Email *</InputLabel>
+            <InputLabel className="label">Email*</InputLabel>
             <TextField
               placeholder="jsmith@gmail.com"
               type="email"
@@ -90,7 +96,7 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
             />
           </div>
           <div className="column">
-            <InputLabel className="label">Phone</InputLabel>
+            <InputLabel className="label">Phone*</InputLabel>
             <TextField
               placeholder="123-456-7890"
               value={phone}
@@ -133,7 +139,7 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
             </div>
           ))}
         </div>
-
+        <div className="row-spacer"></div>
         <div className="row center">
           <div className="column">
             <Button

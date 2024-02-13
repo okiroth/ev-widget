@@ -1,6 +1,5 @@
 .wrapper {
   padding-bottom: 10px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .top_section {
@@ -70,7 +69,7 @@ select {
 
 .submit-button {
   flex: 1;
-  margin-top: 20px !important;
+  margin-top: 20px;
 }
 
 .link {
@@ -91,37 +90,32 @@ select {
 }
 
 .title {
-  color: #000;
-  font-size: 22px !important;
-  font-style: normal;
+  font-size: 22px;
   font-weight: 500;
   line-height: 120%; /* 26.4px */
   margin: 30px 0;
 }
 
 .subtitle {
-  color: #000;
-  font-size: 16px !important;
+  font-size: 16px;
+  font-weight: 300;
   font-style: normal;
-  font-weight: 400;
   line-height: 120%; /* 19.2px */
   margin-bottom: 10px;
 }
 
 .label {
-  color: #000;
   font-size: 13px !important;
-  font-style: normal;
-  font-weight: 400;
   line-height: 120%; /* 15.6px */
   margin-bottom: 8px;
 }
 
 .error {
+  text-align: center;
   font-size: small;
   color: red;
   position: relative;
-  top: -10px;
+  top: 5px;
   height: 0;
 }
 
