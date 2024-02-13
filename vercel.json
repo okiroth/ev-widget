@@ -10,6 +10,15 @@
       ]
     },
     {
+      "source": "detroittradingexchange.com/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
       "source": "ev-widget.vercel.app/(.*)",
       "headers": [
         {
