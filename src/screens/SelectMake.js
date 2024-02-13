@@ -81,7 +81,7 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
 
   return (
     <ThemeProvider theme={APP_THEME}>
-      <div className="container">
+      <div className="container blue-step">
         <div className="row">
           <div className="column">
             <InputLabel className="label">Make</InputLabel>

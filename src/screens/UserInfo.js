@@ -50,14 +50,14 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
 
     // TODO replace sleep with the actual ping
     ApiHandler.sleep().then(() => {
-      setShowStep(STEPS.SELECT_MAKE);
+      setShowStep(STEPS.SUBMITTED);
       setLoading(false);
     });
   };
 
   return (
     <ThemeProvider theme={APP_THEME}>
-      <div className="container">
+      <div className="container blue-step">
         <div className="row">
           <div className="column">
             <InputLabel className="label">First Name *</InputLabel>
@@ -101,6 +101,7 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
         </div>
         {error && <div className="error">{error}</div>}
 
+        <div className="row-spacer"></div>
         <div className="row-spacer">
           <div className="subtitle" style={{ marginBottom: 10 }}>
             We’ve found the following qualified dealerships near you:
@@ -153,12 +154,13 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
               By clicking submit, I authorize dealers that I select to contact
               me by phone or email. Carrier fees and charges may apply
             </div>
-          </div>
-        </div>
-
-        <div className="row left">
-          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKE)}>
-            Go back
+            <div className="row-spacer"></div>
+            <div
+              className="link"
+              onClick={() => setShowStep(STEPS.SELECT_MAKE)}
+            >
+              Go back
+            </div>
           </div>
         </div>
       </div>

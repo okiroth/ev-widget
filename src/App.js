@@ -74,7 +74,11 @@ function App() {
           />
         )}
         {showStep === STEPS.SUBMITTED && (
-          <ScreenSubmitted setShowStep={setShowStep} />
+          <ScreenSubmitted
+            setShowStep={setShowStep}
+            selection={selection}
+            setSelection={setSelection}
+          />
         )}
       </div>
     </div>
