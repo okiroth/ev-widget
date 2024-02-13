@@ -29,8 +29,7 @@ export const ApiHandler = {
   newCarPingDummy: async (data) => {
     return fetch("/newCarPing.html")
       .then((response) => response.text())
-      .then((text) => JSON.parse(text))
-      .catch((error) => console.log("error", error));
+      .then((text) => JSON.parse(text));
   },
 
   sleep: async () => {
