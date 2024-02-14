@@ -18,10 +18,7 @@ export const ApiHandler = {
       redirect: "follow",
     };
 
-    return fetch(
-      "https://production.detroittradingexchange.com/api/v2/NewCar/Ping",
-      requestOptions
-    )
+    return fetch("/api/v2/NewCar/Ping", requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log("error", error));
   },
@@ -29,7 +26,8 @@ export const ApiHandler = {
   newCarPingDummy: async (data) => {
     return fetch("/newCarPing.html")
       .then((response) => response.text())
-      .then((text) => JSON.parse(text));
+      .then((text) => JSON.parse(text))
+      .catch((error) => console.log("error", error));
   },
 
   sleep: async () => {
