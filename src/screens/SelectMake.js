@@ -9,7 +9,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
-import { CARS_DATA } from "../data/cars";
+import { CARS_DATA } from "../data/2024 EV Data - EV Data";
 import { ApiHandler } from "../ApiHandler";
 
 function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {

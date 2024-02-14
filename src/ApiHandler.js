@@ -7,7 +7,7 @@ export const ApiHandler = {
     const raw = JSON.stringify({
       generatorId: "0000-5034",
       password: "5034AEZ",
-      siteUrl: "wwww.nerdwallet.com",
+      siteUrl: window.location.href,
       ...data,
     });
 

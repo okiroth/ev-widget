@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
 import ScreenSelectMaker from "./screens/SelectMake";
-import ScreenNoMaker from "./screens/NoMaker";
 import ScreenUserInfo from "./screens/UserInfo";
 import ScreenSubmitted from "./screens/Submitted";
 import TopSection from "./components/TopSection";
@@ -9,9 +8,8 @@ import { createTheme } from "@mui/material";
 
 const STEPS = {
   SELECT_MAKE: 0,
-  NO_MAKER: 1,
-  USER_INFO: 2,
-  SUBMITTED: 3,
+  USER_INFO: 1,
+  SUBMITTED: 2,
 };
 
 const APP_THEME = createTheme({
@@ -63,9 +61,6 @@ function App() {
             setDealerships={setDealerships}
           />
         )}
-        {/* {showStep === STEPS.NO_MAKER && (
-          <ScreenNoMaker setShowStep={setShowStep} />
-        )} */}
         {showStep === STEPS.USER_INFO && (
           <ScreenUserInfo
             setShowStep={setShowStep}
