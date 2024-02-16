@@ -42,10 +42,7 @@ function App() {
   const [showStep, setShowStep] = useState(STEPS.SELECT_MAKE);
   const [selection, setSelection] = useState({});
   const [userInfo, setUserInfo] = useState({});
-  const [dealerships, setDealerships] = useState([
-    { name: "Dealer 1", distance: 5 },
-    { name: "Dealer 2", distance: 10 },
-  ]);
+  const [dealerships, setDealerships] = useState([]);
 
   return (
     <div className="wrapper">
