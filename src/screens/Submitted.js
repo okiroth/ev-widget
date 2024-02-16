@@ -6,7 +6,6 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    console.log("user selecxion", selection);
     setImages([
       {
         url: "images/kia_ev6.png",
@@ -49,7 +48,7 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
         <div className="row-spacer"></div>
         <div className="row-spacer"></div>
         <div className="row left">
-          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKE)}>
+          <div className="link" onClick={() => setShowStep(STEPS.USER_INFO)}>
             Go back
           </div>
         </div>

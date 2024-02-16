@@ -52,7 +52,7 @@ function App() {
     phone: "",
     selected: [],
   });
-  const [dealerships, setDealerships] = useState([]);
+  const [dealers, setDealers] = useState([]);
 
   return (
     <div className="wrapper">
@@ -65,15 +65,16 @@ function App() {
             setShowStep={setShowStep}
             setSelection={setSelection}
             selection={selection}
-            setDealerships={setDealerships}
+            setDealers={setDealers}
           />
         )}
         {showStep === STEPS.USER_INFO && (
           <ScreenUserInfo
+            selection={selection}
             setShowStep={setShowStep}
             userInfo={userInfo}
             setUserInfo={setUserInfo}
-            dealerships={dealerships}
+            dealers={dealers}
           />
         )}
         {showStep === STEPS.SUBMITTED && (

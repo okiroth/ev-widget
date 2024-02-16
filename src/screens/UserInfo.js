@@ -10,34 +10,27 @@ import {
 import { APP_THEME, STEPS } from "../App";
 import { ApiHandler } from "../ApiHandler";
 
-function UserInfo({ setShowStep, userInfo, setUserInfo, dealerships }) {
+function UserInfo({ setShowStep, userInfo, setUserInfo, selection, dealers }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [checkboxes, setCheckboxes] = useState([]);
 
-  const handleCheckboxChange = (index) => (event) => {
-    const newCheckboxes = [...userInfo.selected];
-    newCheckboxes[index].checked = event.target.checked;
-    setUserInfo({ ...userInfo, selected: newCheckboxes });
+  const handleCheckboxChange = (dealer) => (event) => {
+    let aux = [];
+    const uuid = dealer.reservationID;
+    if (userInfo.selected.includes(uuid)) {
+      aux = userInfo.selected.filter((d) => d !== uuid);
+    } else {
+      aux = [...userInfo.selected, uuid];
+    }
+    setUserInfo({ ...userInfo, selected: aux });
   };
 
   useEffect(() => {
     setError("");
   }, [userInfo]);
 
-  useEffect(() => {
-    setCheckboxes(
-      dealerships.map((dealer) => ({
-        label: `${dealer.name} (${dealer.distance} miles)`,
-        value: dealer.reservationID,
-        checked: false,
-      }))
-    );
-  }, [dealerships]);
-
-  const handleSubmit = (event) => {
-    const noDealers =
-      checkboxes.filter((checkbox) => checkbox.checked).length === 0;
+  const handleSubmit = () => {
+    const noDealers = userInfo.selected.length === 0;
     if (noDealers) {
       setError("Please select at least one dealership.");
       return;
@@ -51,14 +44,36 @@ function UserInfo({ setShowStep, userInfo, setUserInfo, dealerships }) {
       setError("Please fill out all required fields.");
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userInfo.email)) {
+      setError("Invalid Email");
+      return;
+    }
+
+    const phoneRegex =
+      /^\+?1? ?\(?([2-9][0-8][0-9])\)?[-. ]?([2-9][0-9]{2})[-. ]?([0-9]{4})$/;
+    if (!phoneRegex.test(userInfo.phone)) {
+      setError("Invalid Phone");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
-    // TODO replace sleep with the actual ping
-    ApiHandler.sleep().then(() => {
-      setShowStep(STEPS.SUBMITTED);
-      setLoading(false);
+    userInfo.selected.forEach((uuid) => {
+      ApiHandler.sendSelectedDealers({
+        ...selection,
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        email: userInfo.email,
+        phone: userInfo.phone,
+        reservationID: uuid,
+      });
     });
+
+    setLoading(false);
+    setShowStep(STEPS.SUBMITTED);
   };
 
   return (
@@ -120,7 +135,7 @@ function UserInfo({ setShowStep, userInfo, setUserInfo, dealerships }) {
           <div className="subtitle" style={{ marginBottom: 10 }}>
             We’ve found the following qualified dealerships near you:
           </div>
-          {checkboxes.map((checkbox, index) => (
+          {dealers.map((dealer, index) => (
             <div key={index} className="left">
               <FormControlLabel
                 sx={{
@@ -138,11 +153,11 @@ function UserInfo({ setShowStep, userInfo, setUserInfo, dealerships }) {
                         fontSize: "2rem",
                       },
                     }}
-                    checked={checkbox.checked}
-                    onChange={handleCheckboxChange(index)}
+                    checked={userInfo.selected.includes(dealer.reservationID)}
+                    onChange={handleCheckboxChange(dealer)}
                   />
                 }
-                label={checkbox.label}
+                label={`${dealer.name} (${dealer.distance} miles)`}
               />
             </div>
           ))}

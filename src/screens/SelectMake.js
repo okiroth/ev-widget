@@ -12,7 +12,7 @@ import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
 import { CARS_DATA } from "../data/2024 EV Data - EV Data";
 import { ApiHandler } from "../ApiHandler";
 
-function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
+function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
   const [errorpostalCode, setErrorPostalCode] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,9 +70,9 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
     setError("");
     setErrorPostalCode(false);
 
-    ApiHandler.newCarPing(selection).then((res) => {
+    ApiHandler.getCloseDealers(selection).then((res) => {
       if (res?.success) {
-        setDealerships(res.dealers);
+        setDealers(res.dealers);
         setShowStep(STEPS.USER_INFO);
       } else {
         setNoDealers(true);
