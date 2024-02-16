@@ -10,24 +10,20 @@ import {
 import { APP_THEME, STEPS } from "../App";
 import { ApiHandler } from "../ApiHandler";
 
-function UserInfo({ setShowStep, setUserInfo, dealerships }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+function UserInfo({ setShowStep, userInfo, setUserInfo, dealerships }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [checkboxes, setCheckboxes] = useState([]);
 
   const handleCheckboxChange = (index) => (event) => {
-    const newCheckboxes = [...checkboxes];
+    const newCheckboxes = [...userInfo.selected];
     newCheckboxes[index].checked = event.target.checked;
-    setCheckboxes(newCheckboxes);
+    setUserInfo({ ...userInfo, selected: newCheckboxes });
   };
 
   useEffect(() => {
     setError("");
-  }, [firstName, lastName, email, phone, checkboxes]);
+  }, [userInfo]);
 
   useEffect(() => {
     setCheckboxes(
@@ -46,13 +42,17 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
       setError("Please select at least one dealership.");
       return;
     }
-    if (!firstName || !lastName || !email || !phone) {
+    if (
+      !userInfo.firstName ||
+      !userInfo.lastName ||
+      !userInfo.email ||
+      !userInfo.phone
+    ) {
       setError("Please fill out all required fields.");
       return;
     }
     setLoading(true);
     setError("");
-    setUserInfo({ firstName, lastName, email, phone, checkboxes });
 
     // TODO replace sleep with the actual ping
     ApiHandler.sleep().then(() => {
@@ -69,8 +69,10 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
             <InputLabel className="label">First Name*</InputLabel>
             <TextField
               placeholder="Jhon"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={userInfo.firstName}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, firstName: e.target.value })
+              }
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
@@ -78,8 +80,10 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
             <InputLabel className="label">Last Name*</InputLabel>
             <TextField
               placeholder="Smith"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={userInfo.lastName}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, lastName: e.target.value })
+              }
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
@@ -90,8 +94,10 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
             <TextField
               placeholder="jsmith@gmail.com"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userInfo.email}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, email: e.target.value })
+              }
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
@@ -99,8 +105,10 @@ function UserInfo({ setShowStep, setUserInfo, dealerships }) {
             <InputLabel className="label">Phone*</InputLabel>
             <TextField
               placeholder="123-456-7890"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={userInfo.phone}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, phone: e.target.value })
+              }
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>

@@ -13,9 +13,6 @@ import { CARS_DATA } from "../data/2024 EV Data - EV Data";
 import { ApiHandler } from "../ApiHandler";
 
 function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
-  const [make, setMake] = useState(selection.make || "");
-  const [model, setModel] = useState(selection.model || "");
-  const [postalCode, setPostalCode] = useState(selection.postalCode || "");
   const [errorpostalCode, setErrorPostalCode] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,6 +24,24 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
   const postalCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
   useEffect(() => {
+    const uniqueMakes = [...new Set(cars.map((car) => car.make))].map(
+      (make) => ({ value: make, label: make })
+    );
+    setMakes(uniqueMakes);
+  }, [cars]);
+
+  useEffect(() => {
+    const uniqueModels = [
+      ...new Set(
+        cars
+          .filter((car) => car.make === selection.make)
+          .map((car) => car.model)
+      ),
+    ].map((model) => ({ value: model, label: model }));
+    setModels(uniqueModels);
+  }, [cars, selection.make]);
+
+  useEffect(() => {
     const lines = CARS_DATA.split("\n");
     lines.forEach((line) => {
       const [make, model] = line.split(",");
@@ -34,36 +49,18 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
     });
   }, []);
 
-  // This checks for unique makes
-  useEffect(() => {
-    const uniqueMakes = [...new Set(cars.map((car) => car.make))].map(
-      (make) => ({ value: make, label: make })
-    );
-    setMakes(uniqueMakes);
-  }, [cars]);
-
-  // This checks for unique models after the make is selected
-  useEffect(() => {
-    const uniqueModels = [
-      ...new Set(
-        cars.filter((car) => car.make === make).map((car) => car.model)
-      ),
-    ].map((model) => ({ value: model, label: model }));
-    setModels(uniqueModels);
-  }, [cars, make]);
-
   useEffect(() => {
     setError("");
     setNoDealers(false);
-  }, [make, model, postalCode]);
+  }, [selection]);
 
   const handleSubmit = () => {
-    if (!make || !model) {
+    if (!selection.make || !selection.model) {
       setError("Please fill out all required fields.");
       return;
     }
     setError("");
-    if (!postalCodeRegex.test(postalCode)) {
+    if (!postalCodeRegex.test(selection.postalCode)) {
       setErrorPostalCode(true);
       return;
     }
@@ -72,9 +69,8 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
 
     setError("");
     setErrorPostalCode(false);
-    setSelection({ make, model, postalCode });
 
-    ApiHandler.newCarPing({ make, model, postalCode }).then((res) => {
+    ApiHandler.newCarPing(selection).then((res) => {
       if (res?.success) {
         setDealerships(res.dealers);
         setShowStep(STEPS.USER_INFO);
@@ -93,8 +89,10 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
             <InputLabel className="label">Make</InputLabel>
             <Select
               sx={INPUT_PLACEHOLDER}
-              value={make}
-              onChange={(e) => setMake(e.target.value)}
+              value={selection.make}
+              onChange={(e) =>
+                setSelection({ ...selection, make: e.target.value })
+              }
             >
               {makes.map((make, index) => (
                 <MenuItem key={index} value={make.value}>
@@ -107,8 +105,10 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
             <InputLabel className="label">Model</InputLabel>
             <Select
               sx={INPUT_PLACEHOLDER}
-              value={model}
-              onChange={(e) => setModel(e.target.value)}
+              value={selection.model}
+              onChange={(e) =>
+                setSelection({ ...selection, model: e.target.value })
+              }
             >
               {models.map((model, index) => (
                 <MenuItem key={index} value={model.value}>
@@ -121,8 +121,10 @@ function SelectMake({ setShowStep, setSelection, selection, setDealerships }) {
             <InputLabel className="label">Zip Code</InputLabel>
             <TextField
               placeholder="12345"
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
+              value={selection.postalCode}
+              onChange={(e) =>
+                setSelection({ ...selection, postalCode: e.target.value })
+              }
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
             {errorpostalCode && (

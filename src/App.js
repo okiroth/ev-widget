@@ -40,14 +40,24 @@ const INPUT_PLACEHOLDER = {
 
 function App() {
   const [showStep, setShowStep] = useState(STEPS.SELECT_MAKE);
-  const [selection, setSelection] = useState({});
-  const [userInfo, setUserInfo] = useState({});
+  const [selection, setSelection] = useState({
+    make: "",
+    model: "",
+    postalCode: "",
+  });
+  const [userInfo, setUserInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    selected: [],
+  });
   const [dealerships, setDealerships] = useState([]);
 
   return (
     <div className="wrapper">
       <div className="top_section">
-        <TopSection />
+        <TopSection selection={selection} />
       </div>
       <div className="steps_section">
         {showStep === STEPS.SELECT_MAKE && (
@@ -61,6 +71,7 @@ function App() {
         {showStep === STEPS.USER_INFO && (
           <ScreenUserInfo
             setShowStep={setShowStep}
+            userInfo={userInfo}
             setUserInfo={setUserInfo}
             dealerships={dealerships}
           />
