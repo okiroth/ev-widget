@@ -38,7 +38,10 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
               <p>{image.subtitle}</p>
               <div
                 className="link"
-                onClick={() => setSelection(image.selection)}
+                onClick={() => {
+                  setSelection({ ...selection, ...image.selection });
+                  setShowStep(STEPS.SELECT_MAKE);
+                }}
               >
                 <strong>See Nearby Dealerships</strong>
               </div>

@@ -72,8 +72,11 @@ function UserInfo({ setShowStep, userInfo, setUserInfo, selection, dealers }) {
       });
     });
 
-    setLoading(false);
-    setShowStep(STEPS.SUBMITTED);
+    // otherwise it looks strange the instant change
+    ApiHandler.sleep().then(() => {
+      setLoading(false);
+      setShowStep(STEPS.SUBMITTED);
+    });
   };
 
   return (

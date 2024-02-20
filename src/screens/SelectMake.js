@@ -80,7 +80,6 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
       setLoading(false);
     });
   };
-
   return (
     <ThemeProvider theme={APP_THEME}>
       <div className="container blue-step">
