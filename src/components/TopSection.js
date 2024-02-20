@@ -20,10 +20,10 @@ const TopSection = ({ selection }) => {
         </div>
       </div>
       <img
+        className="top_section_image"
         onError={() => setImageSrc("/car.png")}
         src={imgSrc}
         alt=""
-        style={{ marginLeft: "auto", maxWidth: "28%" }}
       />
     </div>
   );

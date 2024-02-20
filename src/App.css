@@ -142,11 +142,11 @@ select {
 }
 
 .image-item {
-  flex: 1 0 200px; /* Grow, shrink, basis */
+  flex: 1 0 50px; /* Grow, shrink, basis */
   text-align: center;
   border: 1px solid #b1d5ff;
   border-radius: 20px;
-  padding: 70px 0;
+  padding: 30px 0;
   background-color: white;
 }
 
@@ -161,4 +161,19 @@ select {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.top_section_image {
+  height: 100px;
+  width: auto;
+}
+
+@media screen and (max-width: 568px) {
+  .top_section_image {
+    display: none;
+  }
+  .image-item img {
+    width: auto;
+    height: 50px;
+  }
 }
