@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { ApiHandler } from "../ApiHandler";
 
 const TopSection = ({ selection }) => {
   const [imgSrc, setImageSrc] = useState("/car.png");
 
   useEffect(() => {
     if (selection.make && selection.model) {
-      const make = selection.make.toLowerCase();
-      const model = selection.model
-        .toLowerCase()
-        .replace(" ", "_")
-        .replace("-", "")
-        .replace(".", "");
-      setImageSrc(`/images/cars/24_${make}_${model}.png`);
+      setImageSrc(ApiHandler.getCarImage(selection.make, selection.model));
     }
   }, [selection]);
 

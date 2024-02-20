@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { APP_THEME, STEPS } from "../App";
 import { ThemeProvider } from "@mui/material";
+import { CARS_DATA } from "../data/2024 EV Data - EV Data";
+import { ApiHandler } from "../ApiHandler";
 
 const ImageGrid = ({ selection, setSelection, setShowStep }) => {
   const [images, setImages] = useState([]);
 
+  const getRandomCar = () => {
+    const carsData = CARS_DATA.split("\n");
+    const randomIndex = Math.floor(Math.random() * carsData.length);
+    const line = carsData[randomIndex];
+    const [make, model] = line.split(",");
+    console.log({ make, model });
+    return { make, model };
+  };
+
   useEffect(() => {
-    setImages([
-      {
-        url: "images/kia_ev6.png",
-        subtitle: "Kia EV6",
-        selection: { make: "Kia", model: "EV6" },
-      },
-      {
-        url: "images/nissan_leaf.png",
-        subtitle: "Nissan Leaf",
-        selection: { make: "Nissan", model: "Leaf" },
-      },
-    ]);
-  }, [selection]);
+    setImages([getRandomCar(), getRandomCar()]);
+  }, []);
 
   return (
     <ThemeProvider theme={APP_THEME}>
@@ -32,14 +32,20 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
       </div>
       <div className="container">
         <div className="image-grid">
-          {images.map((image, index) => (
-            <div key={index} className="image-item">
-              <img src={image.url} alt={image.subtitle} />
-              <p>{image.subtitle}</p>
+          {images.map((car, idx) => (
+            <div key={idx} className="image-item">
+              <img src={ApiHandler.getCarImage(car.make, car.model)} alt="" />
+              <p>
+                {car.make} {car.model}
+              </p>
               <div
                 className="link"
                 onClick={() => {
-                  setSelection({ ...selection, ...image.selection });
+                  setSelection({
+                    make: car.make,
+                    model: car.model,
+                    postalCode: selection.postalCode,
+                  });
                   setShowStep(STEPS.SELECT_MAKE);
                 }}
               >
