@@ -4,6 +4,7 @@ import ScreenSelectMaker from "./screens/SelectMake";
 import ScreenUserInfo from "./screens/UserInfo";
 import ScreenSubmitted from "./screens/Submitted";
 import TopSection from "./components/TopSection";
+import CheckImages from "./screens/CheckImages";
 import { createTheme } from "@mui/material";
 
 const STEPS = {
@@ -53,6 +54,10 @@ function App() {
     selected: [],
   });
   const [dealers, setDealers] = useState([]);
+
+  if (window.location.href.includes("check-images")) {
+    return <CheckImages />;
+  }
 
   return (
     <div className="wrapper">

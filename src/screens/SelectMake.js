@@ -9,7 +9,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
-import { CARS_DATA } from "../data/2024 EV Data - EV Data";
+import { CARS_DATA_ARRAY } from "../data/2024 EV Data - EV Data";
 import { ApiHandler } from "../ApiHandler";
 
 function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
@@ -18,36 +18,27 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
   const [loading, setLoading] = useState(false);
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
-  const [cars, setCars] = useState([]);
   const [noDealers, setNoDealers] = useState(false);
 
   const postalCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
   useEffect(() => {
-    const uniqueMakes = [...new Set(cars.map((car) => car.make))].map(
-      (make) => ({ value: make, label: make })
-    );
+    const uniqueMakes = [
+      ...new Set(CARS_DATA_ARRAY.map((car) => car.make)),
+    ].map((make) => ({ value: make, label: make }));
     setMakes(uniqueMakes);
-  }, [cars]);
+  }, []);
 
   useEffect(() => {
-    const uniqueModels = [
+    const modelsPerMake = [
       ...new Set(
-        cars
-          .filter((car) => car.make === selection.make)
-          .map((car) => car.model)
+        CARS_DATA_ARRAY.filter((car) => car.make === selection.make).map(
+          (car) => car.model
+        )
       ),
     ].map((model) => ({ value: model, label: model }));
-    setModels(uniqueModels);
-  }, [cars, selection.make]);
-
-  useEffect(() => {
-    const lines = CARS_DATA.split("\n");
-    lines.forEach((line) => {
-      const [make, model] = line.split(",");
-      setCars((prev) => [...prev, { make, model }]);
-    });
-  }, []);
+    setModels(modelsPerMake);
+  }, [selection.make]);
 
   useEffect(() => {
     setError("");

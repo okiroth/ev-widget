@@ -49,3 +49,10 @@ Volkswagen,ID.4,"$38,995",275,https://www.vw.com/en/models/id-4
 Volvo,C40 Recharge,"$53,600",297,https://www.volvocars.com/us/cars/c40-electric/?gad_source=1&gclid=Cj0KCQiA5rGuBhCnARIsAN11vgSBLJtxZlMfFoeHetQJaV2EjDzFM6hVHgKOBymDyPxdK9f7MX-DdmUaAk9AEALw_wcB&gclsrc=aw.ds
 Volvo,XC40 Recharge,"$52,450",293,https://www.volvocars.com/us/cars/xc40-electric
 `;
+
+export const CARS_DATA_ARRAY = CARS_DATA.split("\n")
+  .map((line) => {
+    const [make, model, price, range, url] = line.split(",");
+    return { make, model, price, range, url };
+  })
+  .filter((car) => car.make && car.model && car.price && car.range && car.url);

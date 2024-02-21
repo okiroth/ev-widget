@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { APP_THEME, STEPS } from "../App";
 import { ThemeProvider } from "@mui/material";
-import { CARS_DATA } from "../data/2024 EV Data - EV Data";
+import { CARS_DATA_ARRAY } from "../data/2024 EV Data - EV Data";
 import { ApiHandler } from "../ApiHandler";
 
 const ImageGrid = ({ selection, setSelection, setShowStep }) => {
   const [images, setImages] = useState([]);
 
   const getRandomCar = () => {
-    const carsData = CARS_DATA.split("\n");
-    const randomIndex = Math.floor(Math.random() * carsData.length);
-    const line = carsData[randomIndex];
-    const [make, model] = line.split(",");
-    console.log({ make, model });
+    const randomIndex = Math.floor(Math.random() * CARS_DATA_ARRAY.length);
+    const { make, model } = CARS_DATA_ARRAY[randomIndex];
     return { make, model };
   };
 
