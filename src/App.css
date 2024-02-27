@@ -1,5 +1,21 @@
+.calculator_wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.left_menu {
+  min-width: 250px;
+}
+
 .wrapper {
   padding-bottom: 10px;
+}
+
+.top_section_calc {
+  background-color: white;
+  padding: 30px calc(7% + 5px);
+  border: 1px solid #d8d9da;
 }
 
 .top_section {
@@ -14,7 +30,7 @@
 }
 
 .blue-step {
-  background-color: #eff6ff;
+  background-color: #d8eaff;
 }
 
 .container {
@@ -27,11 +43,11 @@
   display: flex;
   justify-content: center;
   margin: 10px 0;
-  gap: 12px;
+  gap: 10px;
 }
 
 .row-spacer {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .column {
@@ -56,6 +72,7 @@
 input,
 select {
   background-color: white !important;
+  border-radius: 10px;
 }
 
 .input {
@@ -90,10 +107,10 @@ select {
 }
 
 .title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 120%; /* 26.4px */
-  margin: 30px 0;
+  margin-bottom: 30px;
 }
 
 .subtitle {

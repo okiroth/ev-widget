@@ -8,9 +8,9 @@ import {
   FormHelperText,
   ThemeProvider,
 } from "@mui/material";
-import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "../App";
-import { CARS_DATA_ARRAY } from "../data/2024 EV Data - EV Data";
-import { ApiHandler } from "../ApiHandler";
+import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "App";
+import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
+import { ApiHandler } from "ApiHandler";
 
 function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
   const [errorpostalCode, setErrorPostalCode] = useState(false);

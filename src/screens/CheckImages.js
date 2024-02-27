@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { CARS_DATA_ARRAY } from "../data/2024 EV Data - EV Data";
-import { ApiHandler } from "../ApiHandler";
+import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
+import { ApiHandler } from "ApiHandler";
 
 export default function CheckImages() {
   const [errors, setErrors] = useState([]);

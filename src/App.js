@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import "./App.css";
-import ScreenSelectMaker from "./screens/SelectMake";
-import ScreenUserInfo from "./screens/UserInfo";
-import ScreenSubmitted from "./screens/Submitted";
-import TopSection from "./components/TopSection";
-import CheckImages from "./screens/CheckImages";
+import "App.css";
+import ScreenSelectMaker from "screens/SelectMake";
+import ScreenUserInfo from "screens/UserInfo";
+import ScreenSubmitted from "screens/Submitted";
+import TopSection from "components/TopSection";
+import CheckImages from "screens/CheckImages";
 import { createTheme } from "@mui/material";
+import LeftMenu from "screens/calculator/LeftMenu";
+import TopSectionCalc from "screens/calculator/TopSectionCalc";
+import ZipCode from "screens/calculator/ZipCode";
 
 const STEPS = {
   SELECT_MAKE: 0,
@@ -46,6 +49,11 @@ function App() {
     model: "",
     postalCode: "",
   });
+  const [lease, setLease] = useState({
+    downPayment: undefined,
+    tradeInValue: undefined,
+    price: undefined,
+  });
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
@@ -57,6 +65,52 @@ function App() {
 
   if (window.location.href.includes("check-images")) {
     return <CheckImages />;
+  }
+
+  if (window.location.href.includes("calculator")) {
+    return (
+      <div className="calculator_wrapper">
+        <div className="left_menu">
+          <LeftMenu
+            setShowStep={setShowStep}
+            setSelection={setSelection}
+            selection={selection}
+            lease={lease}
+            setLease={setLease}
+          />
+        </div>
+        <div className="column">
+          <TopSectionCalc selection={selection} />
+          <div className="row-spacer" />
+          <div className="steps_section">
+            {showStep === STEPS.SELECT_MAKE && (
+              <ZipCode
+                setShowStep={setShowStep}
+                selection={selection}
+                setSelection={setSelection}
+                setDealers={setDealers}
+              />
+            )}
+            {showStep === STEPS.USER_INFO && (
+              <ScreenUserInfo
+                selection={selection}
+                setShowStep={setShowStep}
+                userInfo={userInfo}
+                setUserInfo={setUserInfo}
+                dealers={dealers}
+              />
+            )}
+            {showStep === STEPS.SUBMITTED && (
+              <ScreenSubmitted
+                setShowStep={setShowStep}
+                selection={selection}
+                setSelection={setSelection}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

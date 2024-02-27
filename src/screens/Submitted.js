@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { APP_THEME, STEPS } from "../App";
+import { APP_THEME, STEPS } from "App";
 import { ThemeProvider } from "@mui/material";
-import { CARS_DATA_ARRAY } from "../data/2024 EV Data - EV Data";
-import { ApiHandler } from "../ApiHandler";
+import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
+import { ApiHandler } from "ApiHandler";
 
 const ImageGrid = ({ selection, setSelection, setShowStep }) => {
   const [images, setImages] = useState([]);

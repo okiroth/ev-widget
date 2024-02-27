@@ -7,8 +7,8 @@ import {
   FormControlLabel,
   ThemeProvider,
 } from "@mui/material";
-import { APP_THEME, STEPS } from "../App";
-import { ApiHandler } from "../ApiHandler";
+import { APP_THEME, STEPS } from "App";
+import { ApiHandler } from "ApiHandler";
 
 function UserInfo({ setShowStep, userInfo, setUserInfo, selection, dealers }) {
   const [error, setError] = useState("");

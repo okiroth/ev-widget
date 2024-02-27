@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ApiHandler } from "../ApiHandler";
+import { ApiHandler } from "ApiHandler";
 
 const TopSection = ({ selection }) => {
   const [imgSrc, setImageSrc] = useState("/car.png");
