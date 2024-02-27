@@ -5,10 +5,10 @@ const TopSection = ({ selection }) => {
   const [imgSrc, setImageSrc] = useState("/car.png");
 
   useEffect(() => {
-    if (selection.make && selection.model) {
+    if (selection.model) {
       setImageSrc(ApiHandler.getCarImage(selection.make, selection.model));
     }
-  }, [selection]);
+  }, [selection.model]);
 
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
@@ -19,12 +19,9 @@ const TopSection = ({ selection }) => {
           near you
         </div>
       </div>
-      <img
-        className="top_section_image"
-        onError={() => setImageSrc("/car.png")}
-        src={imgSrc}
-        alt=""
-      />
+      <div className="car_image">
+        <img onError={() => setImageSrc("/car.png")} src={imgSrc} alt="" />
+      </div>
     </div>
   );
 };

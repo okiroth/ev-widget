@@ -28,10 +28,12 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
         </div>
       </div>
       <div className="container">
-        <div className="image-grid">
+        <div className="cars_grid">
           {images.map((car, idx) => (
-            <div key={idx} className="image-item">
-              <img src={ApiHandler.getCarImage(car.make, car.model)} alt="" />
+            <div key={idx} className="car_box">
+              <div className="car_image">
+                <img src={ApiHandler.getCarImage(car.make, car.model)} alt="" />
+              </div>
               <p>
                 {car.make} {car.model}
               </p>
