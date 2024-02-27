@@ -57,8 +57,8 @@ export const ApiHandler = {
   getCarImage: (make, model) => {
     return `/images/cars/24_${make.toLowerCase()}_${model
       .toLowerCase()
-      .replace(" ", "_")
-      .replace("-", "")
-      .replace(".", "")}.png`;
+      .replaceAll(" ", "_")
+      .replaceAll("-", "")
+      .replaceAll(".", "")}.png`;
   },
 };

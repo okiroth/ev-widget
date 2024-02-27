@@ -25,7 +25,13 @@ export default function CheckImages() {
               src={ApiHandler.getCarImage(car.make, car.model)}
               alt=""
               onError={() => {
-                setErrors((prev) => [...prev, `${car.make} ${car.model}`]);
+                setErrors((prev) => [
+                  ...prev,
+                  `${car.make} ${car.model}: ${ApiHandler.getCarImage(
+                    car.make,
+                    car.model
+                  )}`,
+                ]);
               }}
             />
             <p>
