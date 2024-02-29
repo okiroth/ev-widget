@@ -7,10 +7,17 @@ import {
   FormControlLabel,
   ThemeProvider,
 } from "@mui/material";
-import { APP_THEME, STEPS } from "App";
-import { ApiHandler } from "ApiHandler";
+import { APP_THEME, STEPS } from "../App";
+import { ApiHandler } from "../ApiHandler";
 
-function UserInfo({ setShowStep, userInfo, setUserInfo, selection, dealers }) {
+function UserInfo({
+  setShowStep,
+  userInfo,
+  setUserInfo,
+  selection,
+  dealers,
+  calculator,
+}) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -81,7 +88,20 @@ function UserInfo({ setShowStep, userInfo, setUserInfo, selection, dealers }) {
 
   return (
     <ThemeProvider theme={APP_THEME}>
-      <div className="container blue-step">
+      <div className={"container " + (calculator ? "" : "blue-step")}>
+        {calculator && (
+          <div>
+            <div>
+              <div className="title">
+                Calculated your lease? Now find your car!
+              </div>
+              <div className="subtitle">
+                You’re in luck! We’ve found the following dealerships near you.
+              </div>
+            </div>
+            <div className="row-spacer" />
+          </div>
+        )}
         <div className="row">
           <div className="column">
             <InputLabel className="label">First Name*</InputLabel>
@@ -133,10 +153,11 @@ function UserInfo({ setShowStep, userInfo, setUserInfo, selection, dealers }) {
         </div>
         {error && <div className="error">{error}</div>}
 
-        <div className="row-spacer"></div>
-        <div className="row-spacer">
+        <div className="row-spacer" />
+        <div className="row-spacer" />
+        <div>
           <div className="subtitle" style={{ marginBottom: 10 }}>
-            We’ve found the following qualified dealerships near you:
+            Select the dealerships you’d like to be contacted by:
           </div>
           {dealers.map((dealer, index) => (
             <div key={index} className="left">

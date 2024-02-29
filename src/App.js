@@ -70,16 +70,14 @@ function App() {
   if (window.location.href.includes("calculator")) {
     return (
       <div className="calculator_wrapper">
-        <div className="left_menu">
-          <LeftMenu
-            setShowStep={setShowStep}
-            setSelection={setSelection}
-            selection={selection}
-            lease={lease}
-            setLease={setLease}
-          />
-        </div>
-        <div className="column">
+        <LeftMenu
+          setShowStep={setShowStep}
+          setSelection={setSelection}
+          selection={selection}
+          lease={lease}
+          setLease={setLease}
+        />
+        <div className="calc-content column">
           <TopSectionCalc lease={lease} />
           <div className="row-spacer" />
           <div className="steps_section">
@@ -93,6 +91,7 @@ function App() {
             )}
             {showStep === STEPS.USER_INFO && (
               <ScreenUserInfo
+                calculator={true}
                 selection={selection}
                 setShowStep={setShowStep}
                 userInfo={userInfo}
@@ -129,6 +128,7 @@ function App() {
         )}
         {showStep === STEPS.USER_INFO && (
           <ScreenUserInfo
+            calculator={false}
             selection={selection}
             setShowStep={setShowStep}
             userInfo={userInfo}

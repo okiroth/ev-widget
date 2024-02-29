@@ -39,7 +39,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
 
   return (
     <ThemeProvider theme={APP_THEME}>
-      <div className="container blue-step">
+      <div className="left_menu blue-step">
         <div className="column">
           <div className="title">Lease details</div>
         </div>

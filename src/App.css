@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
+  justify-content: stretch;
 }
 
 .left_menu {
-  min-width: 250px;
+  padding: 30px 15px;
+  align-self: stretch;
 }
 
 .wrapper {
@@ -114,11 +116,11 @@ select {
   font-size: 20px;
   font-weight: 500;
   line-height: 120%; /* 26.4px */
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .subtitle {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 300;
   font-style: normal;
   line-height: 120%; /* 19.2px */
@@ -200,7 +202,7 @@ select {
 .big_number {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: 32px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .text-blue {
