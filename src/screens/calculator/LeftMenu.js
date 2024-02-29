@@ -28,11 +28,12 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
   }, [selection.make]);
 
   useEffect(() => {
-    const selectedPrice = CARS_DATA_ARRAY.find(
-      (car) => car.make === selection.make && car.model === selection.model
-    )
-      ?.price.replace("$", "")
-      .replace(",", "");
+    const selectedPrice =
+      CARS_DATA_ARRAY.find(
+        (car) => car.make === selection.make && car.model === selection.model
+      )
+        ?.price.replace("$", "")
+        .replace(",", "") || 0;
     setLease({ ...lease, price: Number(selectedPrice) });
   }, [selection.model]);
 

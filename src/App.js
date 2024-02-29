@@ -50,9 +50,9 @@ function App() {
     postalCode: "",
   });
   const [lease, setLease] = useState({
-    downPayment: undefined,
-    tradeInValue: undefined,
-    price: undefined,
+    downPayment: 0,
+    tradeInValue: 0,
+    price: 0,
   });
   const [userInfo, setUserInfo] = useState({
     firstName: "",
@@ -80,7 +80,7 @@ function App() {
           />
         </div>
         <div className="column">
-          <TopSectionCalc selection={selection} />
+          <TopSectionCalc lease={lease} />
           <div className="row-spacer" />
           <div className="steps_section">
             {showStep === STEPS.SELECT_MAKE && (
