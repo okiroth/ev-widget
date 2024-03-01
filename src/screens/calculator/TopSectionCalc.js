@@ -35,6 +35,7 @@ const TopSectionCalc = ({ lease }) => {
     <div className="top_section_calc">
       <div>
         <div className="title">Estimated monthly lease payment</div>
+        <div className="row-spacer" />
         <div className="row">
           <div className="column">
             <div className="big_number text-blue">
@@ -56,6 +57,7 @@ const TopSectionCalc = ({ lease }) => {
             Federal tax credit based on eligibility. To learn more about
             requirements,{" "}
             <a
+              className="text-gray"
               target="_blank"
               href="https://www.nerdwallet.com/article/taxes/ev-tax-credit-electric-vehicle-tax-credit"
               rel="noreferrer"

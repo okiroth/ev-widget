@@ -12,8 +12,9 @@ const TopSection = ({ selection }) => {
 
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <div>
+      <div style={{ marginRight: 20 }}>
         <div className="title">Find an electric vehicle near you</div>
+        <div className="row-spacer" />
         <div className="subtitle">
           Tell us a little bit about yourself to receive offers from dealers
           near you

@@ -53,7 +53,7 @@
 }
 
 .row-spacer {
-  padding: 5px 0;
+  padding: 8px 0;
 }
 
 .column {
@@ -79,11 +79,13 @@ input,
 select {
   background-color: white !important;
   border-radius: 10px;
+  font-family: "Gotham" !important;
 }
 
 .input {
   flex: 1;
   margin-right: 10px;
+  font-family: "Gotham" !important;
 }
 
 .input:last-child {
@@ -93,6 +95,7 @@ select {
 .submit-button {
   flex: 1;
   margin-top: 20px;
+  box-shadow: none !important;
 }
 
 .link {
@@ -116,7 +119,6 @@ select {
   font-size: 20px;
   font-weight: 400;
   line-height: 120%; /* 26.4px */
-  margin-bottom: 20px;
 }
 
 .subtitle {
@@ -124,13 +126,14 @@ select {
   font-weight: 300;
   font-style: normal;
   line-height: 120%; /* 19.2px */
-  margin-bottom: 10px;
 }
 
 .label {
   font-size: 13px !important;
   line-height: 120%; /* 15.6px */
   margin-bottom: 8px;
+  font-family: "Gotham" !important;
+  color: #000 !important;
 }
 
 .error {
@@ -185,7 +188,7 @@ select {
 }
 
 .car_image {
-  width: 200px;
+  width: 250px;
   height: 150px;
   position: relative;
   object-position: center;
@@ -203,6 +206,7 @@ select {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: 32px;
   font-weight: 700;
+  padding-bottom: 12px;
 }
 
 .text-blue {

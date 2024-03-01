@@ -43,6 +43,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
         <div className="column">
           <div className="title">Lease details</div>
         </div>
+        <div className="row-spacer" />
         <div className="column">
           <InputLabel className="label">Make</InputLabel>
           <Select

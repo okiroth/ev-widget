@@ -17,7 +17,9 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [makes, setMakes] = useState([]);
-  const [models, setModels] = useState([]);
+  const [models, setModels] = useState([
+    { value: "", label: "Select Make first" },
+  ]);
   const [noDealers, setNoDealers] = useState(false);
 
   const postalCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
@@ -37,7 +39,12 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
         )
       ),
     ].map((model) => ({ value: model, label: model }));
-    setModels(modelsPerMake);
+    if (modelsPerMake.length === 0) {
+      console.log("No models found for make", selection.make);
+      setModels([{ value: "", label: "Select Make first" }]);
+    } else {
+      setModels(modelsPerMake);
+    }
   }, [selection.make]);
 
   useEffect(() => {
