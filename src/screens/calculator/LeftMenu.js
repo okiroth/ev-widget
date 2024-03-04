@@ -14,6 +14,10 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
       ...new Set(CARS_DATA_ARRAY.map((car) => car.make)),
     ].map((make) => ({ value: make, label: make }));
     setMakes(uniqueMakes);
+
+    if (!selection.make) {
+      setSelection({ make: "Hyundai", model: "Ioniq 5" });
+    }
   }, []);
 
   useEffect(() => {

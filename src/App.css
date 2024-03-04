@@ -3,6 +3,7 @@
   flex-direction: row;
   gap: 10px;
   justify-content: stretch;
+  font-family: "Gotham" !important;
 }
 
 .left_menu {
@@ -13,6 +14,7 @@
 
 .wrapper {
   padding-bottom: 10px;
+  font-family: "Gotham" !important;
 }
 
 .top_section_calc {
@@ -199,7 +201,7 @@ select {
 }
 
 .car_image_calc {
-  width: 180px;
+  width: 150px;
   height: 150px;
   position: relative;
   object-position: center;

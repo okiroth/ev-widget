@@ -169,13 +169,14 @@ function UserInfo({
                   },
                   "& .MuiTypography-root": {
                     fontWeight: "bold",
+                    fontFamily: "Gotham",
                   },
                 }}
                 control={
                   <Checkbox
                     sx={{
                       "& .MuiSvgIcon-root": {
-                        fontSize: "2rem",
+                        fontFamily: "Gotham",
                       },
                     }}
                     checked={userInfo.selected.includes(dealer.reservationID)}

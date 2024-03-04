@@ -6,6 +6,8 @@ const generatorId = "0000-5034";
 const password = "5034AEZ";
 const siteUrl = document.referrer;
 
+const TESTING = false;
+
 export const ApiHandler = {
   getCloseDealers: async (data) => {
     const raw = JSON.stringify({
@@ -20,6 +22,11 @@ export const ApiHandler = {
       body: raw,
       redirect: "follow",
     };
+
+    if (TESTING) {
+      return ApiHandler.getCloseDealersDummy();
+    }
+
     return fetch("/api/v2/NewCar/Ping", requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log("error", error));
@@ -43,8 +50,8 @@ export const ApiHandler = {
       .catch((error) => console.log("error", error));
   },
 
-  getCloseDealersDummy: async (data) => {
-    return fetch("/newCarPing.html")
+  getCloseDealersDummy: async () => {
+    return fetch("/dealers_dummy_data.html")
       .then((response) => response.text())
       .then((text) => JSON.parse(text))
       .catch((error) => console.log("error", error));
