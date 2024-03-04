@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
 import { ApiHandler } from "ApiHandler";
 
-export default function CheckImages() {
+export default function Status() {
   const [errors, setErrors] = useState([]);
   const [errors2, setErrors2] = useState([]);
 
@@ -18,7 +18,9 @@ export default function CheckImages() {
         }).then((res) => {
           setErrors2((prev) => [
             ...prev,
-            `[${zip}] ${car.make} ${car.model}: ${res.dealers.length}`,
+            `[${zip}] ${car.make} ${car.model}: ${res.dealers.length} ${
+              res.dealers.length > 0 ? " <-----" : " "
+            }`,
           ]);
         });
       });
