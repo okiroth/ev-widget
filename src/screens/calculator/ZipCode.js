@@ -99,7 +99,7 @@ function ZipCode({ setShowStep, setSelection, selection, setDealers }) {
               </Button>
             </div>
           </div>
-          <div className="car_image">
+          <div className="car_image_calc desktop">
             <img onError={() => setImageSrc("/car.png")} src={imgSrc} alt="" />
           </div>
         </div>

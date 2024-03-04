@@ -60,8 +60,6 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
             ))}
           </Select>
         </div>
-
-        <div className="row-spacer" />
         <div className="row-spacer" />
         <div className="column">
           <InputLabel className="label">Model</InputLabel>
@@ -79,8 +77,6 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
             ))}
           </Select>
         </div>
-
-        <div className="row-spacer" />
         <div className="row-spacer" />
         <div className="column">
           <InputLabel className="label">Purchase Price</InputLabel>
@@ -91,33 +87,31 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
             onChange={(e) => setLease({ ...lease, price: e.target.value })}
           />
         </div>
-
         <div className="row-spacer" />
-        <div className="row-spacer" />
-        <div className="column">
-          <InputLabel className="label">Down Payment</InputLabel>
-          <CurrencyTextField
-            variant="outlined"
-            decimalPlaces={0}
-            value={lease.downPayment}
-            onChange={(e) =>
-              setLease({ ...lease, downPayment: e.target.value })
-            }
-          />
-        </div>
-
-        <div className="row-spacer" />
-        <div className="row-spacer" />
-        <div className="column">
-          <InputLabel className="label">Trade In Value</InputLabel>
-          <CurrencyTextField
-            variant="outlined"
-            decimalPlaces={0}
-            value={lease.tradeInValue}
-            onChange={(e) =>
-              setLease({ ...lease, tradeInValue: e.target.value })
-            }
-          />
+        <div className="row-mobile">
+          <div className="column">
+            <InputLabel className="label">Down Payment</InputLabel>
+            <CurrencyTextField
+              variant="outlined"
+              decimalPlaces={0}
+              value={lease.downPayment}
+              onChange={(e) =>
+                setLease({ ...lease, downPayment: e.target.value })
+              }
+            />
+          </div>
+          <div className="row-spacer" />
+          <div className="column">
+            <InputLabel className="label">Trade In Value</InputLabel>
+            <CurrencyTextField
+              variant="outlined"
+              decimalPlaces={0}
+              value={lease.tradeInValue}
+              onChange={(e) =>
+                setLease({ ...lease, tradeInValue: e.target.value })
+              }
+            />
+          </div>
         </div>
       </div>
     </ThemeProvider>

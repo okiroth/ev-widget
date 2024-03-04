@@ -8,6 +8,7 @@
 .left_menu {
   padding: 30px 15px;
   align-self: stretch;
+  max-width: 200px;
 }
 
 .wrapper {
@@ -197,7 +198,16 @@ select {
   margin-left: 20px;
 }
 
-.car_image img {
+.car_image_calc {
+  width: 180px;
+  height: 150px;
+  position: relative;
+  object-position: center;
+  margin-left: 20px;
+}
+
+.car_image img,
+.car_image_calc img {
   width: 100%;
   height: 100%;
   margin: auto;
@@ -238,10 +248,19 @@ select {
   .desktop {
     display: none;
   }
+  .left_menu {
+    max-width: 100%;
+  }
+  .calculator_wrapper {
+    flex-direction: column;
+    gap: 15px;
+  }
   .row {
     flex-direction: column;
   }
   .row-mobile {
+    display: flex;
+    gap: 10px;
     flex-direction: row;
     align-items: flex-end;
   }
