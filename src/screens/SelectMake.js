@@ -40,7 +40,6 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
       ),
     ].map((model) => ({ value: model, label: model }));
     if (modelsPerMake.length === 0) {
-      console.log("No models found for make", selection.make);
       setModels([{ value: "", label: "Select Make first" }]);
     } else {
       setModels(modelsPerMake);
@@ -80,7 +79,7 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
   };
   return (
     <ThemeProvider theme={APP_THEME}>
-      <div className="container blue-step">
+      <div className="container blue-step desktop">
         <div className="row">
           <div className="column">
             <InputLabel className="label">Make</InputLabel>
@@ -145,6 +144,78 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
               ) : (
                 "SHOW DEALERSHIPS NEAR YOU"
               )}
+            </Button>
+          </div>
+        </div>
+        <div className="row-spacer"></div>
+        {noDealers && (
+          <div className="row center subtitle">
+            We couldn’t find any nearby dealerships for that Make and Model.
+            Please update the vehicle or try another zip code.
+          </div>
+        )}
+      </div>
+
+      <div className="container blue-step mobile">
+        <div className="row row-mobile">
+          <div className="column">
+            <InputLabel className="label">Make</InputLabel>
+            <Select
+              sx={INPUT_PLACEHOLDER}
+              value={selection.make}
+              onChange={(e) =>
+                setSelection({ ...selection, make: e.target.value })
+              }
+            >
+              {makes.map((make, index) => (
+                <MenuItem key={index} value={make.value}>
+                  {make.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+          <div className="column">
+            <InputLabel className="label">Model</InputLabel>
+            <Select
+              sx={INPUT_PLACEHOLDER}
+              value={selection.model}
+              onChange={(e) =>
+                setSelection({ ...selection, model: e.target.value })
+              }
+            >
+              {models.map((model, index) => (
+                <MenuItem key={index} value={model.value}>
+                  {model.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+        </div>
+        <div className="row row-mobile">
+          <div>
+            <InputLabel className="label">Zip Code</InputLabel>
+            <TextField
+              placeholder="12345"
+              value={selection.postalCode}
+              onChange={(e) =>
+                setSelection({ ...selection, postalCode: e.target.value })
+              }
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+            />
+            {errorpostalCode && (
+              <FormHelperText>Invalid Zip Code</FormHelperText>
+            )}
+          </div>
+          <div>
+            {error && <div className="error">{error}</div>}
+            <Button
+              className="submit-button"
+              variant="contained"
+              color="primary"
+              sx={{ fontWeight: "bold", width: 220, height: 55 }}
+              onClick={handleSubmit}
+            >
+              {loading ? <div className="spinner"></div> : "SHOW DEALERSHIPS"}
             </Button>
           </div>
         </div>

@@ -154,11 +154,12 @@ function UserInfo({
         {error && <div className="error">{error}</div>}
 
         <div className="row-spacer" />
-        <div className="row-spacer" />
         <div>
-          <div className="subtitle" style={{ marginBottom: 10 }}>
+          <div className="subtitle">
             Select the dealerships you’d like to be contacted by:
           </div>
+          <div className="row-spacer" />
+
           {dealers.map((dealer, index) => (
             <div key={index} className="left">
               <FormControlLabel
@@ -186,8 +187,8 @@ function UserInfo({
             </div>
           ))}
         </div>
-        <div className="row-spacer"></div>
-        <div className="row center">
+        <div className="row-spacer" />
+        <div className="row">
           <div className="column">
             <Button
               className="submit-button"
