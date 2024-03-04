@@ -4,7 +4,7 @@ myHeaders.append("Accept", "application/json");
 
 const generatorId = "0000-5034";
 const password = "5034AEZ";
-const siteUrl = document.referrer;
+const siteUrl = document.referrer || "https://www.nerdwallet.com/";
 
 const TESTING = false;
 
