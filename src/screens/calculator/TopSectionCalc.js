@@ -9,25 +9,28 @@ const TopSectionCalc = ({ lease }) => {
   const MONEY_FACTOR = 0.003733;
   const DEALER_FEES = 750;
   const FEDERAL_TAX_CREDIT = 7500;
+  const SALES_TAX_RATE = 0.0625; // Replace with the actual sales tax rate
 
-  const getMonthlyPayment = (grossCapCost) => {
-    const NET_CAPITALIZED_COST =
-      grossCapCost - lease.downPayment - lease.tradeInValue;
-    const DEPRECIATION =
-      NET_CAPITALIZED_COST - lease.price * RESIDUAL_VALUE_PERCENT;
-    const RENT_CHARGE =
-      (NET_CAPITALIZED_COST + lease.price * RESIDUAL_VALUE_PERCENT) *
-      MONEY_FACTOR *
-      TERM_IN_MONTHS;
-    return (DEPRECIATION + RENT_CHARGE) / TERM_IN_MONTHS;
+  const getMonthlyPayment = (purchasePrice, taxCredit) => {
+    const grossCapCost =
+      purchasePrice + DEALER_FEES - (taxCredit ? FEDERAL_TAX_CREDIT : 0);
+    const netCapCost = grossCapCost - lease.downPayment - lease.tradeInValue;
+    const residualValue = purchasePrice * RESIDUAL_VALUE_PERCENT;
+    const depreciation = netCapCost - residualValue;
+    const rentCharge =
+      (netCapCost + residualValue) * MONEY_FACTOR * TERM_IN_MONTHS;
+    const salesTax = (depreciation + rentCharge) * SALES_TAX_RATE;
+    const salesTaxOnLease = salesTax / TERM_IN_MONTHS;
+    const calcLeasePayment = (depreciation + rentCharge) / TERM_IN_MONTHS;
+    const totalLeasePayment = salesTaxOnLease + calcLeasePayment;
+
+    return totalLeasePayment;
   };
 
   useEffect(() => {
     if (lease.price) {
-      setWithoutTaxCredit(getMonthlyPayment(lease.price + DEALER_FEES));
-      setWithTaxCredit(
-        getMonthlyPayment(lease.price + DEALER_FEES - FEDERAL_TAX_CREDIT)
-      );
+      setWithoutTaxCredit(getMonthlyPayment(lease.price));
+      setWithTaxCredit(getMonthlyPayment(lease.price, true));
     }
   }, [lease]);
 
