@@ -89,7 +89,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
             variant="outlined"
             decimalPlaces={0}
             value={lease.price}
-            onChange={(e) => setLease({ ...lease, price: e.target.value })}
+            onChange={(_, v) => setLease({ ...lease, price: v })}
           />
         </div>
         <div className="row-spacer" />
@@ -100,9 +100,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
               variant="outlined"
               decimalPlaces={0}
               value={lease.downPayment}
-              onChange={(e) =>
-                setLease({ ...lease, downPayment: e.target.value })
-              }
+              onChange={(_, v) => setLease({ ...lease, downPayment: v })}
             />
           </div>
           <div className="row-spacer" />
@@ -112,9 +110,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
               variant="outlined"
               decimalPlaces={0}
               value={lease.tradeInValue}
-              onChange={(e) =>
-                setLease({ ...lease, tradeInValue: e.target.value })
-              }
+              onChange={(_, v) => setLease({ ...lease, tradeInValue: v })}
             />
           </div>
         </div>

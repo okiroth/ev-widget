@@ -10,7 +10,7 @@ export default function RevoLogo() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g clip-path="url(#clip0_136_27)">
+            <g clipPath="url(#clip0_136_27)">
               <path
                 d="M22.7397 10.2222H35.1613L35.8173 14.7207H27.1802L26.7448 17.0425H34.8131L34.1746 20.7283H26.1063L25.671 23.1372H34.3197L33.5361 27.6357H19.6633L22.7397 10.2222Z"
                 fill="#234873"
