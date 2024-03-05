@@ -106,7 +106,7 @@ function UserInfo({
           <div className="column">
             <InputLabel className="label">First Name*</InputLabel>
             <TextField
-              placeholder="Jhon"
+              placeholder="Sam"
               value={userInfo.firstName}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, firstName: e.target.value })
