@@ -34,6 +34,11 @@
   border-bottom: none;
 }
 
+.MuiFormHelperText-root {
+  height: 0 !important;
+  margin: 0 !important;
+}
+
 .steps_section {
   border: 1px solid #d8d9da;
 }
@@ -51,6 +56,14 @@
 .row {
   display: flex;
   justify-content: center;
+  margin: 10px 0;
+  gap: 10px;
+}
+
+.row-stretch {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 10px 0;
   gap: 10px;
 }
@@ -108,8 +121,9 @@ select {
 
 .link {
   font-size: small;
-  color: #28f;
+  color: #2288ff;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .link:hover {
@@ -118,6 +132,7 @@ select {
 
 .disclaimer {
   font-size: small;
+  font-weight: 300;
   font-style: italic;
   color: #6e6e6e;
   margin: 10px 0;
@@ -192,6 +207,14 @@ select {
   line-height: normal;
 }
 
+.car_image_small {
+  width: 200px;
+  height: 100px;
+  position: relative;
+  object-position: center;
+  margin-left: 20px;
+}
+
 .car_image {
   width: 250px;
   height: 150px;
@@ -209,7 +232,8 @@ select {
 }
 
 .car_image img,
-.car_image_calc img {
+.car_image_calc img,
+.car_image_small img {
   width: 100%;
   height: 100%;
   margin: auto;

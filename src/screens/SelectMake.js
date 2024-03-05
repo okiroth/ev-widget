@@ -11,6 +11,7 @@ import {
 import { APP_THEME, STEPS, INPUT_PLACEHOLDER } from "App";
 import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
 import { ApiHandler } from "ApiHandler";
+import RevoLogo from "components/RevoLogo";
 
 function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
   const [errorpostalCode, setErrorPostalCode] = useState(false);
@@ -147,13 +148,14 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
             </Button>
           </div>
         </div>
-        <div className="row-spacer"></div>
         {noDealers && (
           <div className="row center subtitle">
             We couldn’t find any nearby dealerships for that Make and Model.
             Please update the vehicle or try another zip code.
           </div>
         )}
+        <div className="row-spacer" />
+        <RevoLogo />
       </div>
 
       <div className="container blue-step mobile">
@@ -219,13 +221,14 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
             </Button>
           </div>
         </div>
-        <div className="row-spacer"></div>
         {noDealers && (
           <div className="row center subtitle">
             We couldn’t find any nearby dealerships for that Make and Model.
             Please update the vehicle or try another zip code.
           </div>
         )}
+        <div className="row-spacer" />
+        <RevoLogo />
       </div>
     </ThemeProvider>
   );

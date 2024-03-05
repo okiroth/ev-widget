@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { APP_THEME, STEPS } from "App";
 import { ApiHandler } from "ApiHandler";
+import RevoLogo from "components/RevoLogo";
 
 function ZipCode({ setShowStep, setSelection, selection, setDealers }) {
   const [errorpostalCode, setErrorPostalCode] = useState(false);

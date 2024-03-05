@@ -203,19 +203,22 @@ function UserInfo({
           </div>
         </div>
 
-        <div className="row center">
+        <div className="row">
           <div className="column">
             <div className="disclaimer">
               By clicking submit, I authorize dealers that I select to contact
               me by phone or email. Carrier fees and charges may apply
             </div>
-            <div className="row-spacer"></div>
-            <div
-              className="link"
-              onClick={() => setShowStep(STEPS.SELECT_MAKE)}
-            >
-              Go back
-            </div>
+          </div>
+        </div>
+        <div className="row-stretch">
+          <div className="link" onClick={() => setShowStep(STEPS.SELECT_MAKE)}>
+            Go back
+          </div>
+          <div>
+            <a target="_blank" className="link" href="wwww.tryrevo.com">
+              tryrevo.com
+            </a>
           </div>
         </div>
       </div>

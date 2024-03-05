@@ -4,6 +4,7 @@ import CurrencyTextField from "@lupus-ai/mui-currency-textfield";
 
 import { APP_THEME, INPUT_PLACEHOLDER } from "App";
 import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
+import RevoLogo from "components/RevoLogo";
 
 function LeftMenu({ setSelection, selection, lease, setLease }) {
   const [makes, setMakes] = useState([]);
@@ -117,6 +118,8 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
             />
           </div>
         </div>
+        <div className="row-spacer" />
+        <RevoLogo />
       </div>
     </ThemeProvider>
   );

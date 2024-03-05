@@ -31,7 +31,7 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
         <div className="cars_grid">
           {images.map((car, idx) => (
             <div key={idx} className="car_box">
-              <div className="car_image">
+              <div className="car_image_small">
                 <img src={ApiHandler.getCarImage(car.make, car.model)} alt="" />
               </div>
               <p>
@@ -54,10 +54,14 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
           ))}
         </div>
         <div className="row-spacer"></div>
-        <div className="row-spacer"></div>
-        <div className="row left">
+        <div className="row-stretch">
           <div className="link" onClick={() => setShowStep(STEPS.USER_INFO)}>
             Go back
+          </div>
+          <div>
+            <a target="_blank" className="link" href="wwww.tryrevo.com">
+              tryrevo.com
+            </a>
           </div>
         </div>
       </div>
