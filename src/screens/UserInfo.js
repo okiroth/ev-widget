@@ -130,7 +130,7 @@ function UserInfo({
           <div className="column">
             <InputLabel className="label">Email*</InputLabel>
             <TextField
-              placeholder="jsmith@gmail.com"
+              placeholder="sam.smith@gmail.com"
               type="email"
               value={userInfo.email}
               onChange={(e) =>
