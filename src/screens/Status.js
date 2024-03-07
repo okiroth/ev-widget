@@ -5,17 +5,23 @@ import { ApiHandler } from "ApiHandler";
 export default function Status() {
   const [errors, setErrors] = useState([]);
   const [errors2, setErrors2] = useState([]);
+  const [searched, setSearched] = useState(0);
+  const [found, setFound] = useState(0);
 
   const ZIP_CODES = ["10001", "48201", "90210", "94115", "2138"];
 
   useEffect(() => {
     ZIP_CODES.forEach((zip) => {
       CARS_DATA_ARRAY.forEach((car) => {
+        setSearched((prev) => prev + 1);
         ApiHandler.getCloseDealers({
           make: car.make,
           model: car.model,
           postalCode: zip,
         }).then((res) => {
+          if (res.dealers.length > 0) {
+            setFound((prev) => prev + 1);
+          }
           setErrors2((prev) => [
             ...prev,
             `[${zip}] ${car.make} ${car.model}: ${res.dealers.length} ${
@@ -30,6 +36,8 @@ export default function Status() {
   return (
     <div>
       <h1>Dealers</h1>
+      <p>Searched: {searched}</p>
+      <p>Found: {found}</p>
       {errors2.length > 0 && (
         <div>
           <ul>

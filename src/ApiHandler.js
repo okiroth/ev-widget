@@ -3,7 +3,9 @@ myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Accept", "application/json");
 
 const generatorId = "0000-5034";
-const password = "5034AEZ";
+// const password = "5034AEZ";
+const password =
+  "ZDn3PkmeKsHoRjcaSNujKdRh9JqZeUW8+DJ3Jbil8+FSJ8snaadT8oj6JV3BqtJlMOQXNSIkpI6nu1CDwgNmCg==";
 const siteUrl = document.referrer || "https://www.nerdwallet.com/";
 
 const TESTING = false;
