@@ -63,11 +63,6 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
       return;
     }
 
-    gtag("event", "screen_view", {
-      app_name: "myAppName",
-      screen_name: "Home",
-    });
-
     setLoading(true);
 
     setError("");
