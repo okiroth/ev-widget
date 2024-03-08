@@ -26,9 +26,6 @@ module.exports = function (app) {
       pathRewrite: {
         "^/autoweb-ping": "/leadengine/DropZone.asmx/Ping",
       },
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-      },
       logLevel: "debug",
     })
   );
@@ -39,9 +36,6 @@ module.exports = function (app) {
       changeOrigin: true,
       pathRewrite: {
         "^/autoweb-post": "/leadengine/DropZone.asmx",
-      },
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
       },
       logLevel: "debug",
     })

@@ -1,7 +1,16 @@
 var convert = require("xml-js");
+
+// HEADERS
 const detroitHeaders = new Headers();
 detroitHeaders.append("Content-Type", "application/json");
 detroitHeaders.append("Accept", "application/json");
+
+const autowebHeaders = new Headers();
+autowebHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+autowebHeaders.append(
+  "Accept",
+  "text/html,application/xhtml+xml,application/xml"
+);
 
 const generatorId = "0000-5034";
 const password =
@@ -9,17 +18,17 @@ const password =
 const siteUrl = document.referrer || "https://www.nerdwallet.com/";
 
 function getDealersAutoWeb(data) {
-  const body = {
-    providerID: 1234, //TODO replace when we have the real providerID
-    year: "2024",
-    make: data.make,
-    model: data.model,
-    trim: "",
-    zipCode: data.postalCode,
-  };
   return fetch("/autoweb-ping", {
-    body: new URLSearchParams(body).toString(),
+    body: new URLSearchParams({
+      providerID: 1234, //TODO replace when we have the real providerID
+      year: "2024",
+      make: data.make,
+      model: data.model,
+      trim: "",
+      zipCode: data.postalCode,
+    }).toString(),
     method: "POST",
+    headers: autowebHeaders,
   })
     .then((response) => response.text())
     .then(
