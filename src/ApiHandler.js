@@ -1,50 +1,71 @@
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Accept", "application/json");
+var convert = require("xml-js");
+const detroitHeaders = new Headers();
+detroitHeaders.append("Content-Type", "application/json");
+detroitHeaders.append("Accept", "application/json");
 
 const generatorId = "0000-5034";
-// const password = "5034AEZ";
 const password =
   "ZDn3PkmeKsHoRjcaSNujKdRh9JqZeUW8+DJ3Jbil8+FSJ8snaadT8oj6JV3BqtJlMOQXNSIkpI6nu1CDwgNmCg==";
 const siteUrl = document.referrer || "https://www.nerdwallet.com/";
 
-const TESTING = false;
+function getDealersAutoWeb(data) {
+  const body = {
+    providerID: 1234, //TODO replace when we have the real providerID
+    year: "2024",
+    make: data.make,
+    model: data.model,
+    trim: "",
+    zipCode: data.postalCode,
+  };
+  return fetch("/autoweb-ping", {
+    body: new URLSearchParams(body).toString(),
+    method: "POST",
+  })
+    .then((response) => response.text())
+    .then(
+      (str) => convert.xml2js(str, { compact: true, spaces: 4 }).PingResult
+    );
+}
+
+function getDealersDetroitTradingExchange(data) {
+  const requestOptions = {
+    method: "POST",
+    headers: detroitHeaders,
+    body: JSON.stringify({
+      generatorId,
+      password,
+      siteUrl,
+      ...data,
+    }),
+    redirect: "follow",
+  };
+  return fetch("/api/v2/NewCar/Ping", requestOptions)
+    .then((response) => response.json())
+    .catch((error) => console.log("error", error));
+}
 
 export const ApiHandler = {
   getCloseDealers: async (data) => {
-    const raw = JSON.stringify({
-      generatorId,
-      password,
-      siteUrl,
-      ...data,
+    return Promise.all([
+      getDealersAutoWeb(data),
+      getDealersDetroitTradingExchange(data),
+    ]).then((values) => {
+      // TODO combine the two results, or use one or the other
+      // console.log(values);
+      return values[1];
     });
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    if (TESTING) {
-      return ApiHandler.getCloseDealersDummy();
-    }
-
-    return fetch("/api/v2/NewCar/Ping", requestOptions)
-      .then((response) => response.json())
-      .catch((error) => console.log("error", error));
   },
 
   sendSelectedDealers: async (data) => {
-    const raw = JSON.stringify({
-      generatorId,
-      password,
-      siteUrl,
-      ...data,
-    });
     const requestOptions = {
       method: "POST",
-      headers: myHeaders,
-      body: raw,
+      headers: detroitHeaders,
+      body: JSON.stringify({
+        generatorId,
+        password,
+        siteUrl,
+        ...data,
+      }),
       redirect: "follow",
     };
     return fetch("/api/v2/NewCar/Post", requestOptions)
