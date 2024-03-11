@@ -8,7 +8,7 @@ export default function Status() {
   const [searched, setSearched] = useState(0);
   const [found, setFound] = useState(0);
 
-  const ZIP_CODES = ["10001", "48201", "90210", "94115", "2138"];
+  const ZIP_CODES = ["10001", "48201", "90210", "94115", "02138"];
 
   useEffect(() => {
     ZIP_CODES.forEach((zip) => {
