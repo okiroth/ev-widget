@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { APP_THEME, STEPS } from "App";
 import { ApiHandler } from "ApiHandler";
-import RevoLogo from "components/RevoLogo";
 
 function ZipCode({ setShowStep, setSelection, selection, setDealers }) {
   const [errorpostalCode, setErrorPostalCode] = useState(false);
@@ -48,8 +47,8 @@ function ZipCode({ setShowStep, setSelection, selection, setDealers }) {
     setErrorPostalCode(false);
 
     ApiHandler.getCloseDealers(selection).then((res) => {
-      if (res?.success) {
-        setDealers(res.dealers);
+      if (res.length > 0) {
+        setDealers(res);
         setShowStep(STEPS.USER_INFO);
       } else {
         setNoDealers(true);

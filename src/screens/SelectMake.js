@@ -69,8 +69,8 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
     setErrorPostalCode(false);
 
     ApiHandler.getCloseDealers(selection).then((res) => {
-      if (res?.success) {
-        setDealers(res.dealers);
+      if (res.length > 0) {
+        setDealers(res);
         setShowStep(STEPS.USER_INFO);
       } else {
         setNoDealers(true);

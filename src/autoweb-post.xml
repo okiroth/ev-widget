@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Post xmlns="http://www.autobytel.com/">
+      <lead>
+        <ProspectID>1e618e49-e08f-4b62-b7d6-4025247728d7</ProspectID>
+        <Vehicle>
+          <Status>New</Status>
+          <Year>2020</Year>
+          <Make>Toyota</Make>
+          <Model>Camry</Model>
+          <PreferedFinanceMethod>Finance</PreferedFinanceMethod>
+        </Vehicle>
+        <Customer>
+          <FirstName>Glenn</FirstName>
+          <LastName>Davis</LastName>
+          <Address1>18872 MacArthur Blvd.</Address1>
+          <City>Irvine</City>
+          <State>CA</State>
+          <ZipCode>92612</ZipCode>
+          <HomePhone>9492254567</HomePhone>
+          <EmailAddress>glennda@autobytel.com</EmailAddress>
+          <BestContactMethod>HomePhone</BestContactMethod>
+          <BestContactTime>Day</BestContactTime>
+          <PurchaseTimeFrame>Within30Days</PurchaseTimeFrame>
+        </Customer>
+        <Dealers>
+          <Dealer>
+            <ProgramID>1</ProgramID>
+            <DealerID>230480</DealerID>
+            <DealerCode>232434324</DealerCode>
+          </Dealer>
+          <Dealer>
+            <ProgramID>1</ProgramID>
+            <DealerID>220388</DealerID>
+            <DealerCode>2342342343</DealerCode>
+          </Dealer>
+          <Dealer>
+            <ProgramID>96</ProgramID>
+            <DealerID>144251</DealerID>
+            <DealerCode>22654</DealerCode>
+          </Dealer>
+        </Dealers>
+        <Provider>
+          <ProviderID>35270</ProviderID>
+        </Provider>
+      </lead>
+    </Post>
+  </soap:Body>
+</soap:Envelope>

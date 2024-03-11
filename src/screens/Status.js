@@ -19,13 +19,13 @@ export default function Status() {
           model: car.model,
           postalCode: zip,
         }).then((res) => {
-          if (res.dealers.length > 0) {
+          if (res.length > 0) {
             setFound((prev) => prev + 1);
           }
           setErrors2((prev) => [
             ...prev,
-            `[${zip}] ${car.make} ${car.model}: ${res.dealers.length} ${
-              res.dealers.length > 0 ? " <-----" : " "
+            `[${zip}] ${car.make} ${car.model}: ${res.length} ${
+              res.length > 0 ? " <-----" : " "
             }`,
           ]);
         });

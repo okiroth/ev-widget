@@ -23,7 +23,7 @@ function UserInfo({
 
   const handleCheckboxChange = (dealer) => (event) => {
     let aux = [];
-    const uuid = dealer.reservationID;
+    const uuid = dealer.uuid;
     if (userInfo.selected.includes(uuid)) {
       aux = userInfo.selected.filter((d) => d !== uuid);
     } else {
@@ -68,16 +68,13 @@ function UserInfo({
     setLoading(true);
     setError("");
 
-    userInfo.selected.forEach((uuid) => {
-      ApiHandler.sendSelectedDealers({
-        ...selection,
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        email: userInfo.email,
-        phone: userInfo.phone,
-        reservationID: uuid,
-      });
-    });
+    ApiHandler.sendSelectedDealers(
+      userInfo,
+      selection,
+      userInfo.selected.map((uuid) =>
+        dealers.find((dealer) => dealer.uuid === uuid)
+      )
+    );
 
     // otherwise it looks strange the instant change
     ApiHandler.sleep().then(() => {
@@ -179,7 +176,7 @@ function UserInfo({
                         fontFamily: "Gotham",
                       },
                     }}
-                    checked={userInfo.selected.includes(dealer.reservationID)}
+                    checked={userInfo.selected.includes(dealer.uuid)}
                     onChange={handleCheckboxChange(dealer)}
                   />
                 }

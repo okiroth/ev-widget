@@ -1,4 +1,11 @@
-var convert = require("xml-js");
+import {
+  AUTOWEB_PROVIDER_ID,
+  DETROIT_GENERATOR_ID,
+  DETROIT_PASSWORD,
+  SITE_URL,
+} from "Settings";
+
+var _xml = require("xml-js");
 
 // HEADERS
 const detroitHeaders = new Headers();
@@ -12,74 +19,163 @@ autowebHeaders.append(
   "text/html,application/xhtml+xml,application/xml"
 );
 
-const generatorId = "0000-5034";
-const password =
-  "ZDn3PkmeKsHoRjcaSNujKdRh9JqZeUW8+DJ3Jbil8+FSJ8snaadT8oj6JV3BqtJlMOQXNSIkpI6nu1CDwgNmCg==";
-const siteUrl = document.referrer || "https://www.nerdwallet.com/";
-
-function getDealersAutoWeb(data) {
+function getDealersAutoWeb(carSelection) {
   return fetch("/autoweb-ping", {
     body: new URLSearchParams({
-      providerID: 1234, //TODO replace when we have the real providerID
+      providerID: AUTOWEB_PROVIDER_ID,
       year: "2024",
-      make: data.make,
-      model: data.model,
+      make: carSelection.make,
+      model: carSelection.model,
       trim: "",
-      zipCode: data.postalCode,
+      zipCode: carSelection.postalCode,
     }).toString(),
     method: "POST",
     headers: autowebHeaders,
   })
     .then((response) => response.text())
-    .then(
-      (str) => convert.xml2js(str, { compact: true, spaces: 4 }).PingResult
-    );
+    .then((str) => _xml.xml2js(str, { compact: true, spaces: 4 }).PingResult)
+    .then((data) =>
+      data.Dealers.Dealer.map((dealer) => ({
+        _provider: "autoweb",
+        name: dealer.Name._text,
+        address: dealer.Address._text,
+        city: dealer.City._text,
+        state: dealer.State._text,
+        uuid: dealer.DealerCode._text,
+        distance: dealer.Distance._text,
+        ProgramID: dealer.ProgramID._text,
+        DealerID: dealer.DealerID._text,
+        DealerCode: dealer.DealerCode._text,
+      }))
+    )
+    .catch(() => []);
 }
 
-function getDealersDetroitTradingExchange(data) {
+function getDealersDetroitTradingExchange(carSelection) {
+  return fetch("/api/v2/NewCar/Ping", {
+    method: "POST",
+    headers: detroitHeaders,
+    body: JSON.stringify({
+      generatorId: DETROIT_GENERATOR_ID,
+      password: DETROIT_PASSWORD,
+      siteUrl: SITE_URL,
+      make: carSelection.make,
+      model: carSelection.model,
+      postalCode: carSelection.postalCode,
+    }),
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((result) =>
+      result.dealers.map((dealer) => ({
+        ...dealer,
+        uuid: dealer.reservationID,
+        _provider: "detroit",
+      }))
+    )
+    .catch(() => []);
+}
+
+function sendToAutoweb(userInfo, carSelection, dealer) {
+  const lead = {
+    Vehicle: {
+      Status: "New",
+      Year: "2024",
+      Make: carSelection.make,
+      Model: carSelection.model,
+    },
+    Customer: {
+      FirstName: userInfo.firstName,
+      LastName: userInfo.lastName,
+      EmailAddress: userInfo.email,
+      HomePhone: userInfo.phone,
+      ZipCode: carSelection.postalCode,
+    },
+    Dealers: {
+      Dealer: {
+        ProgramID: dealer.ProgramID,
+        DealerID: dealer.DealerID,
+        DealerCode: dealer.DealerCode,
+      },
+    },
+    Provider: { ProviderID: AUTOWEB_PROVIDER_ID },
+  };
+  const content = _xml.js2xml(
+    { lead },
+    { compact: true, ignoreComment: false, spaces: 0 }
+  );
+  const body = `<?xml version="1.0" encoding="utf-8"?>
+  <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+      <Post xmlns="http://www.autobytel.com/">
+        ${content}
+      </Post>
+    </soap:Body>
+  </soap:Envelope>`;
+  console.log(body);
+  return fetch("/autoweb-post", {
+    method: "POST",
+    headers: new Headers({ "Content-Type": "text/xml;charset=UTF-8" }),
+    body: body,
+    redirect: "follow",
+  })
+    .then((response) => response.text())
+    .then((data) => console.log(data))
+    .catch((error) => console.log("error", error));
+}
+
+function sendToDetroit(userInfo, carSelection, dealer) {
   const requestOptions = {
     method: "POST",
     headers: detroitHeaders,
     body: JSON.stringify({
-      generatorId,
-      password,
-      siteUrl,
-      ...data,
+      generatorId: DETROIT_GENERATOR_ID,
+      password: DETROIT_PASSWORD,
+      siteUrl: SITE_URL,
+      make: carSelection.make,
+      model: carSelection.model,
+      postalCode: carSelection.postalCode,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      email: userInfo.email,
+      phone: userInfo.phone,
+      reservationID: dealer.reservationID,
     }),
     redirect: "follow",
   };
-  return fetch("/api/v2/NewCar/Ping", requestOptions)
+
+  return fetch("/api/v2/NewCar/Post", requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
 }
 
 export const ApiHandler = {
-  getCloseDealers: async (data) => {
+  getCloseDealers: async (carSelection) => {
     return Promise.all([
-      getDealersAutoWeb(data),
-      getDealersDetroitTradingExchange(data),
+      getDealersAutoWeb(carSelection),
+      getDealersDetroitTradingExchange(carSelection),
     ]).then((values) => {
-      // TODO combine the two results, or use one or the other
-      // console.log(values);
-      return values[1];
+      console.log({ values });
+      return [].concat(values[0], values[1]);
     });
   },
 
-  sendSelectedDealers: async (data) => {
-    const requestOptions = {
-      method: "POST",
-      headers: detroitHeaders,
-      body: JSON.stringify({
-        generatorId,
-        password,
-        siteUrl,
-        ...data,
-      }),
-      redirect: "follow",
-    };
-    return fetch("/api/v2/NewCar/Post", requestOptions)
-      .then((response) => response.json())
-      .catch((error) => console.log("error", error));
+  sendSelectedDealers: async (userInfo, carSelection, selectedDealers) => {
+    Promise.all(
+      selectedDealers.map((dealer) => {
+        if (dealer._provider === "detroit") {
+          return sendToDetroit(userInfo, carSelection, dealer);
+        }
+        if (dealer._provider === "autoweb") {
+          return sendToAutoweb(userInfo, carSelection, dealer);
+        }
+        return undefined;
+      })
+    ).then((values) => {
+      console.log({ values });
+    });
   },
 
   getCloseDealersDummy: async () => {
