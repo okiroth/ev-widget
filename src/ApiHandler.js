@@ -154,9 +154,19 @@ export const ApiHandler = {
     return Promise.all([
       getDealersAutoWeb(carSelection),
       getDealersDetroitTradingExchange(carSelection),
-    ]).then((values) => {
-      return [].concat(values[0], values[1]);
-    });
+    ]).then((values) => [].concat(values[0], values[1]));
+  },
+
+  getCloseDealersSpread: async (carSelection) => {
+    return Promise.all([
+      getDealersAutoWeb(carSelection),
+      getDealersDetroitTradingExchange(carSelection),
+    ]).then((values) => ({
+      autoweb: values[0],
+      detroit: values[1],
+      total: values[0].length + values[1].length,
+      both: values[0].length > 0 && values[1].length > 0,
+    }));
   },
 
   sendSelectedDealers: async (userInfo, carSelection, selectedDealers) => {

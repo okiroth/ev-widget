@@ -14,7 +14,7 @@ export default function Status() {
     ZIP_CODES.forEach((zip) => {
       CARS_DATA_ARRAY.forEach((car) => {
         setSearched((prev) => prev + 1);
-        ApiHandler.getCloseDealers({
+        ApiHandler.getCloseDealersSpread({
           make: car.make,
           model: car.model,
           postalCode: zip,
@@ -24,9 +24,10 @@ export default function Status() {
           }
           setErrors2((prev) => [
             ...prev,
-            `[${zip}] ${car.make} ${car.model}: ${res.length} ${
-              res.length > 0 ? " <-----" : " "
-            }`,
+            `[${zip}] ${res.autoweb.length} | ${res.detroit.length} (${
+              car.make
+            } ${car.model}) ${res.total > 0 ? "✅" : ""}
+            ${res.both ? "✅✅✅✅" : ""}`,
           ]);
         });
       });
