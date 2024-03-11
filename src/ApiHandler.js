@@ -114,7 +114,6 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
       </Post>
     </soap:Body>
   </soap:Envelope>`;
-  console.log(body);
   return fetch("/autoweb-post", {
     method: "POST",
     headers: new Headers({ "Content-Type": "text/xml;charset=UTF-8" }),
@@ -122,7 +121,6 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
     redirect: "follow",
   })
     .then((response) => response.text())
-    .then((data) => console.log(data))
     .catch((error) => console.log("error", error));
 }
 
@@ -157,7 +155,6 @@ export const ApiHandler = {
       getDealersAutoWeb(carSelection),
       getDealersDetroitTradingExchange(carSelection),
     ]).then((values) => {
-      console.log({ values });
       return [].concat(values[0], values[1]);
     });
   },
@@ -173,9 +170,7 @@ export const ApiHandler = {
         }
         return undefined;
       })
-    ).then((values) => {
-      console.log({ values });
-    });
+    );
   },
 
   getCloseDealersDummy: async () => {
