@@ -19,7 +19,7 @@ export default function Status() {
           model: car.model,
           postalCode: zip,
         }).then((res) => {
-          if (res.length > 0) {
+          if (res.total > 0) {
             setFound((prev) => prev + 1);
           }
           setErrors2((prev) => [
