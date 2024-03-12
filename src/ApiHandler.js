@@ -1,4 +1,5 @@
 import ReactGA from "react-ga4";
+import { track } from "@vercel/analytics";
 import {
   AUTOWEB_PROVIDER_ID,
   DETROIT_GENERATOR_ID,
@@ -127,6 +128,12 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
       const error =
         response["soap:Envelope"]["soap:Body"].PostResponse.PostResult.Errors
           ?.Error?.Message?._text;
+      track("autoweb_submit", {
+        email: userInfo.email,
+        uuid: dealer.uuid,
+        name: dealer.name,
+        error: error,
+      });
       if (error) {
         ReactGA.event("autoweb_submit_error", {
           uuid: dealer.uuid,
@@ -160,6 +167,21 @@ function sendToDetroit(userInfo, carSelection, dealer) {
 
   return fetch("/api/v2/NewCar/Post", requestOptions)
     .then((response) => response.json())
+    .then((result) => {
+      track("detroit_submit", {
+        email: userInfo.email,
+        uuid: dealer.uuid,
+        name: dealer.name,
+        error: result.errorMessage,
+      });
+      if (result.errorMessage) {
+        ReactGA.event("detroit_submit_error", {
+          uuid: dealer.uuid,
+          name: dealer.name,
+          error: result.errorMessage,
+        });
+      }
+    })
     .catch((error) => console.log("error", error));
 }
 
