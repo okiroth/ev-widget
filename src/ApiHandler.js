@@ -42,7 +42,7 @@ function getDealersAutoWeb(carSelection) {
         address: dealer.Address._text,
         city: dealer.City._text,
         state: dealer.State._text,
-        uuid: dealer.DealerCode._text,
+        uuid: dealer.DealerCode._text || dealer.DealerID._text,
         distance: dealer.Distance._text,
         ProgramID: dealer.ProgramID._text,
         DealerID: dealer.DealerID._text,
@@ -122,6 +122,19 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
     redirect: "follow",
   })
     .then((response) => response.text())
+    .then((body) => _xml.xml2js(body, { compact: true, spaces: 4 }))
+    .then((response) => {
+      const error =
+        response["soap:Envelope"]["soap:Body"].PostResponse.PostResult.Errors
+          ?.Error?.Message?._text;
+      if (error) {
+        ReactGA.event("autoweb_submit_error", {
+          uuid: dealer.uuid,
+          name: dealer.name,
+          error: error,
+        });
+      }
+    })
     .catch((error) => console.log("error", error));
 }
 
