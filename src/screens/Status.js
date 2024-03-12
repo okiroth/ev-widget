@@ -6,7 +6,8 @@ export default function Status() {
   const [errors, setErrors] = useState([]);
   const [errors2, setErrors2] = useState([]);
   const [searched, setSearched] = useState(0);
-  const [found, setFound] = useState(0);
+  const [foundDetroit, setFoundDetroit] = useState(0);
+  const [foundAutoweb, setFoundAutoweb] = useState(0);
 
   const ZIP_CODES = ["10001", "48201", "90210", "94115", "02138"];
 
@@ -19,8 +20,11 @@ export default function Status() {
           model: car.model,
           postalCode: zip,
         }).then((res) => {
-          if (res.total > 0) {
-            setFound((prev) => prev + 1);
+          if (res.detroit.length > 0) {
+            setFoundDetroit((prev) => prev + 1);
+          }
+          if (res.autoweb.length > 0) {
+            setFoundAutoweb((prev) => prev + 1);
           }
           setErrors2((prev) => [
             ...prev,
@@ -38,7 +42,8 @@ export default function Status() {
     <div>
       <h1>Dealers</h1>
       <p>Searched: {searched}</p>
-      <p>Found: {found}</p>
+      <p>Detroit: {foundDetroit}</p>
+      <p>Autoweb: {foundAutoweb}</p>
       {errors2.length > 0 && (
         <div>
           <ul>
