@@ -28,9 +28,9 @@ export default function Status() {
           }
           setErrors2((prev) => [
             ...prev,
-            `[${zip}] ${res.autoweb.length} | ${res.detroit.length} (${
+            `[${zip}] ${res.autoweb.length} | ${res.detroit.length} - ${
               car.make
-            } ${car.model}) ${res.total > 0 ? "✅" : ""}
+            } ${car.model} ${res.total > 0 ? "✅" : ""}
             ${res.both ? "✅✅✅✅" : ""}`,
           ]);
         });
