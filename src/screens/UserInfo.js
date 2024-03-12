@@ -205,8 +205,11 @@ function UserInfo({
         <div className="row">
           <div className="column">
             <div className="disclaimer">
-              By clicking submit, I authorize dealers that I select to contact
-              me by phone or email. Carrier fees and charges may apply
+              By completing this form, I consent to receive automated or
+              pre-recorded telemarketing calls or texts to the number I provided
+              by or on behalf of [business name], the brands, and the dealers I
+              selected. I understand consent is not required as a condition of
+              any services. Carrier charges may apply.
             </div>
           </div>
         </div>
