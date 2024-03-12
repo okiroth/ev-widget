@@ -42,8 +42,8 @@ export default function Status() {
     <div>
       <h1>Dealers</h1>
       <p>Searched: {searched}</p>
-      <p>Detroit: {foundDetroit}</p>
       <p>Autoweb: {foundAutoweb}</p>
+      <p>Detroit: {foundDetroit}</p>
       {errors2.length > 0 && (
         <div>
           <ul>
