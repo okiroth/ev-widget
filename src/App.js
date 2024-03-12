@@ -11,13 +11,12 @@ import TopSectionCalc from "screens/calculator/TopSectionCalc";
 import ZipCode from "screens/calculator/ZipCode";
 import ReactGA from "react-ga4";
 
-ReactGA.initialize("G-SFZ1ST8K3D");
-
-ReactGA.send({
-  hitType: "pageview",
-  page: document.referrer,
-  title: "Wdiget loaded",
+ReactGA.initialize("G-SFZ1ST8K3D", {
+  debug: true,
+  titleCase: false,
 });
+
+console.log("GA4", ReactGA);
 
 const STEPS = {
   SELECT_MAKE: 0,

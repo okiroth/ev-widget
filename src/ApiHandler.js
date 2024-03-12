@@ -1,3 +1,4 @@
+import ReactGA from "react-ga4";
 import {
   AUTOWEB_PROVIDER_ID,
   DETROIT_GENERATOR_ID,
@@ -170,12 +171,23 @@ export const ApiHandler = {
   },
 
   sendSelectedDealers: async (userInfo, carSelection, selectedDealers) => {
+    ReactGA.event("selected_dealers_submitted", {
+      number_of_dealers: selectedDealers.length,
+    });
     Promise.all(
       selectedDealers.map((dealer) => {
         if (dealer._provider === "detroit") {
+          ReactGA.event("detroit_selected_dealer_submitted", {
+            uuid: dealer.uuid,
+            name: dealer.name,
+          });
           return sendToDetroit(userInfo, carSelection, dealer);
         }
         if (dealer._provider === "autoweb") {
+          ReactGA.event("autoweb_selected_dealer_submitted", {
+            uuid: dealer.uuid,
+            name: dealer.name,
+          });
           return sendToAutoweb(userInfo, carSelection, dealer);
         }
         return undefined;

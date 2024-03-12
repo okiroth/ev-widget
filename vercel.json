@@ -10,11 +10,11 @@
     },
     {
       "source": "/autoweb-ping",
-      "destination": "http://leadengine.services.staging.autobytel.com/leadengine/DropZone.asmx/Ping"
+      "destination": "http://leadengine.services.autobytel.com/leadengine/DropZone.asmx/Ping"
     },
     {
       "source": "/autoweb-post",
-      "destination": "http://leadengine.services.staging.autobytel.com/leadengine/DropZone.asmx"
+      "destination": "http://leadengine.services.autobytel.com/leadengine/DropZone.asmx"
     }
   ]
 }
