@@ -11,6 +11,8 @@ function resizeIframe(iframe) {
 }
 ```
 
+## Lease Calculator
+
 ```html
 <iframe
   onload="resizeIframe(this)"
@@ -22,7 +24,7 @@ function resizeIframe(iframe) {
 ></iframe>
 ```
 
-or
+## Default
 
 ```html
 <iframe
