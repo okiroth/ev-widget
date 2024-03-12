@@ -9,7 +9,14 @@ import {
 import { APP_THEME, STEPS } from "App";
 import { ApiHandler } from "ApiHandler";
 
-function ZipCode({ setShowStep, setSelection, selection, setDealers }) {
+function ZipCode({
+  setShowStep,
+  setSelection,
+  selection,
+  setDealers,
+  setUserInfo,
+  userInfo,
+}) {
   const [errorpostalCode, setErrorPostalCode] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -48,6 +55,7 @@ function ZipCode({ setShowStep, setSelection, selection, setDealers }) {
 
     ApiHandler.getCloseDealers(selection).then((res) => {
       if (res.length > 0) {
+        setUserInfo({ ...userInfo, selected: res.map((d) => d.uuid) });
         setDealers(res);
         setShowStep(STEPS.USER_INFO);
       } else {
@@ -61,6 +69,7 @@ function ZipCode({ setShowStep, setSelection, selection, setDealers }) {
       <div className="container">
         <div>
           <div className="title">Calculated your lease? Now find your car!</div>
+          <div className="row-spacer" />
           <div className="subtitle">
             Tell us a little bit about yourself to receive offers from dealers
             near you

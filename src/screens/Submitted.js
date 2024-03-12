@@ -3,6 +3,7 @@ import { APP_THEME, STEPS } from "App";
 import { ThemeProvider } from "@mui/material";
 import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
 import { ApiHandler } from "ApiHandler";
+import RevoLogo from "components/RevoLogo";
 
 const ImageGrid = ({ selection, setSelection, setShowStep }) => {
   const [images, setImages] = useState([]);
@@ -23,6 +24,7 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
         <div className="title">
           A qualified dealership will be in contact with you soon.
         </div>
+        <div className="row-spacer" />
         <div className="subtitle">
           Meanwhile, here are more electric vehicles you may like
         </div>
@@ -59,9 +61,7 @@ const ImageGrid = ({ selection, setSelection, setShowStep }) => {
             Go back
           </div>
           <div>
-            <a target="_blank" className="link" href="wwww.tryrevo.com">
-              tryrevo.com
-            </a>
+            <RevoLogo />
           </div>
         </div>
       </div>

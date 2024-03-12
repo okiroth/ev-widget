@@ -12,11 +12,9 @@ import ZipCode from "screens/calculator/ZipCode";
 import ReactGA from "react-ga4";
 
 ReactGA.initialize("G-SFZ1ST8K3D", {
-  debug: true,
+  debug: false,
   titleCase: false,
 });
-
-console.log("GA4", ReactGA);
 
 const STEPS = {
   SELECT_MAKE: 0,
@@ -95,6 +93,8 @@ function App() {
                 selection={selection}
                 setSelection={setSelection}
                 setDealers={setDealers}
+                userInfo={userInfo}
+                setUserInfo={setUserInfo}
               />
             )}
             {showStep === STEPS.USER_INFO && (
@@ -132,6 +132,8 @@ function App() {
             setSelection={setSelection}
             selection={selection}
             setDealers={setDealers}
+            setUserInfo={setUserInfo}
+            userInfo={userInfo}
           />
         )}
         {showStep === STEPS.USER_INFO && (

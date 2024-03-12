@@ -13,7 +13,14 @@ import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
 import { ApiHandler } from "ApiHandler";
 import RevoLogo from "components/RevoLogo";
 
-function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
+function SelectMake({
+  setShowStep,
+  setSelection,
+  selection,
+  setDealers,
+  setUserInfo,
+  userInfo,
+}) {
   const [errorpostalCode, setErrorPostalCode] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,6 +77,7 @@ function SelectMake({ setShowStep, setSelection, selection, setDealers }) {
 
     ApiHandler.getCloseDealers(selection).then((res) => {
       if (res.length > 0) {
+        setUserInfo({ ...userInfo, selected: res.map((d) => d.uuid) });
         setDealers(res);
         setShowStep(STEPS.USER_INFO);
       } else {

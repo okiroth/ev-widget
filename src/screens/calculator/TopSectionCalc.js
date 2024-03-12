@@ -55,12 +55,12 @@ const TopSectionCalc = ({ lease }) => {
         </div>
         <div className="row-spacer" />
         <div className="row-spacer" />
-        <div className="text-gray">
+        <div className="disclaimer">
           <span>
             Federal tax credit based on eligibility. To learn more about
             requirements,{" "}
             <a
-              className="text-gray"
+              className="disclaimer"
               target="_blank"
               href="https://www.nerdwallet.com/article/taxes/ev-tax-credit-electric-vehicle-tax-credit"
               rel="noreferrer"

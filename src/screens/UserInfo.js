@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { APP_THEME, STEPS } from "../App";
 import { ApiHandler } from "../ApiHandler";
+import RevoLogo from "components/RevoLogo";
 
 function UserInfo({
   setShowStep,
@@ -92,6 +93,7 @@ function UserInfo({
               <div className="title">
                 Calculated your lease? Now find your car!
               </div>
+              <div className="row-spacer" />
               <div className="subtitle">
                 You’re in luck! We’ve found the following dealerships near you.
               </div>
@@ -213,9 +215,7 @@ function UserInfo({
             Go back
           </div>
           <div>
-            <a target="_blank" className="link" href="wwww.tryrevo.com">
-              tryrevo.com
-            </a>
+            <RevoLogo />
           </div>
         </div>
       </div>
