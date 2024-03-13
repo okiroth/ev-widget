@@ -207,9 +207,9 @@ function UserInfo({
             <div className="disclaimer">
               By completing this form, I consent to receive automated or
               pre-recorded telemarketing calls or texts to the number I provided
-              by or on behalf of [business name], the brands, and the dealers I
-              selected. I understand consent is not required as a condition of
-              any services. Carrier charges may apply.
+              by or on behalf of Revo, the brands, and the dealers I selected. I
+              understand consent is not required as a condition of any services.
+              Carrier charges may apply.
             </div>
           </div>
         </div>
