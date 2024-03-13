@@ -187,26 +187,28 @@ function sendToDetroit(userInfo, carSelection, dealer) {
 
 export const ApiHandler = {
   getCloseDealers: async (carSelection) => {
-    const queries = [];
     const num = Number(carSelection.postalCode);
-    for (let i = num - 5; i <= num + 5; i++) {
-      const nZip = i.toString().padStart(5, "0");
-      queries.push(
-        getDealersAutoWeb({ ...carSelection, postalCode: nZip }),
-        getDealersDetroitTradingExchange({
-          ...carSelection,
-          postalCode: nZip,
-        })
-      );
+    const zips = [];
+    const range = 100;
+    for (let i = num - range; i <= num + range; i++) {
+      zips.push(i);
     }
-    return Promise.all(queries).then((values) => {
-      const all = values.flat(1);
-      const u = {};
-      all.forEach((d) => (u[d.name] = d));
-      return Object.values(u)
-        .sort((a, b) => a.distance - b.distance)
-        .slice(0, 3);
-    });
+    zips.sort((a, b) => Math.abs(num - a) - Math.abs(num - b));
+
+    for (let i = 0; i < zips.length; i++) {
+      const nZip = zips[i].toString().padStart(5, "0");
+      const autoweb = await getDealersAutoWeb({
+        ...carSelection,
+        postalCode: nZip,
+      });
+      const detroit = await getDealersDetroitTradingExchange({
+        ...carSelection,
+        postalCode: nZip,
+      });
+      if (autoweb.length > 0 || detroit.length > 0) {
+        return autoweb.concat(detroit);
+      }
+    }
   },
 
   getCloseDealersSpread: async (carSelection) => {
