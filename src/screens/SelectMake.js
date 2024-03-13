@@ -76,9 +76,15 @@ function SelectMake({
     setErrorPostalCode(false);
 
     ApiHandler.getCloseDealers(selection).then((res) => {
-      if (res.length > 0) {
-        setUserInfo({ ...userInfo, selected: res.map((d) => d.uuid) });
-        setDealers(res);
+      const newDealers = res.dealers;
+      const nPostalCode = res.postalCode;
+      if (newDealers.length > 0) {
+        setUserInfo({
+          ...userInfo,
+          postalCode: nPostalCode,
+          selected: newDealers.map((d) => d.uuid),
+        });
+        setDealers(newDealers);
         setShowStep(STEPS.USER_INFO);
       } else {
         setNoDealers(true);

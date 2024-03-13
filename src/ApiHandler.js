@@ -206,9 +206,10 @@ export const ApiHandler = {
         postalCode: nZip,
       });
       if (autoweb.length > 0 || detroit.length > 0) {
-        return autoweb.concat(detroit);
+        return { dealers: [...autoweb, ...detroit], postalCode: nZip };
       }
     }
+    return { dealers: [], postalCode: carSelection.postalCode };
   },
 
   getCloseDealersSpread: async (carSelection) => {
