@@ -187,10 +187,26 @@ function sendToDetroit(userInfo, carSelection, dealer) {
 
 export const ApiHandler = {
   getCloseDealers: async (carSelection) => {
-    return Promise.all([
-      getDealersAutoWeb(carSelection),
-      getDealersDetroitTradingExchange(carSelection),
-    ]).then((values) => [].concat(values[0], values[1]));
+    const queries = [];
+    const num = Number(carSelection.postalCode);
+    for (let i = num - 5; i <= num + 5; i++) {
+      const nZip = i.toString().padStart(5, "0");
+      queries.push(
+        getDealersAutoWeb({ ...carSelection, postalCode: nZip }),
+        getDealersDetroitTradingExchange({
+          ...carSelection,
+          postalCode: nZip,
+        })
+      );
+    }
+    return Promise.all(queries).then((values) => {
+      const all = values.flat(1);
+      const u = {};
+      all.forEach((d) => (u[d.name] = d));
+      return Object.values(u)
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 3);
+    });
   },
 
   getCloseDealersSpread: async (carSelection) => {

@@ -182,7 +182,7 @@ function UserInfo({
                     onChange={handleCheckboxChange(dealer)}
                   />
                 }
-                label={`${dealer.name} (${dealer.distance} miles)`}
+                label={`${dealer.name} ${dealer.city} (${dealer.distance} miles)`}
               />
             </div>
           ))}
