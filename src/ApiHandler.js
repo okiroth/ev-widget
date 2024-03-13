@@ -206,7 +206,13 @@ export const ApiHandler = {
         postalCode: nZip,
       });
       if (autoweb.length > 0 || detroit.length > 0) {
-        return { dealers: [...autoweb, ...detroit], postalCode: nZip };
+        const all = [...autoweb, ...detroit];
+        console.log(all);
+        all.filter((dealer, index, self) => {
+          // remove duplicates
+          return index === self.findIndex((t) => t.name === dealer.name);
+        });
+        return { dealers: all, postalCode: nZip };
       }
     }
     return { dealers: [], postalCode: carSelection.postalCode };
