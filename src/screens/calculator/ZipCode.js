@@ -53,21 +53,15 @@ function ZipCode({
     setError("");
     setErrorPostalCode(false);
 
-    ApiHandler.getCloseDealers(selection).then((res) => {
-      const newDealers = res.dealers;
-      const nPostalCode = res.postalCode;
-      if (newDealers.length > 0) {
-        setUserInfo({
-          ...userInfo,
-          postalCode: nPostalCode,
-          selected: newDealers.map((d) => d.uuid),
-        });
-        setDealers(newDealers);
+    ApiHandler.getCloseDealers(selection).then((data) => {
+      setLoading(false);
+      if (data && data.length > 0) {
+        setDealers(data);
+        setUserInfo((prev) => ({ ...prev, selected: data.map((d) => d.uuid) }));
         setShowStep(STEPS.USER_INFO);
       } else {
         setNoDealers(true);
       }
-      setLoading(false);
     });
   };
   return (

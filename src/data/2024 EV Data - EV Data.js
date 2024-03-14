@@ -23,12 +23,12 @@ Jaguar	I-Pace	$72,000	246	https://buildyour.jaguarusa.com/jag2/r/products/_/en_u
 Kia	EV6	$42,600	310	https://www.kia.com/us/en/ev6
 Kia	Niro EV	$39,600	253	https://www.kia.com/us/en/niro-ev
 Lucid	Air	$77,400	500	https://lucidmotors.com/air
-Mercedes	EQB	$52,750	245	https://www.mbusa.com/en/vehicles/class/eqb
-Mercedes	EQE Sedan	$74,900	305	https://www.mbusa.com/en/vehicles/class/eqe/sedan
-Mercedes	EQE SUV	$77,900	279	https://www.mbusa.com/en/vehicles/class/eqe/suv
-Mercedes	EQS Sedan	$104,400	350	https://www.mbusa.com/en/vehicles/class/eqs/sedan
-Mercedes	EQS SUV	$104,400	305	https://www.mbusa.com/en/vehicles/class/eqs/suv
-Mercedes	EQS Maybach	$179,900		https://www.mbusa.com/en/vehicles/class/maybach-eqs/suv
+Mercedes-Benz	EQB	$52,750	245	https://www.mbusa.com/en/vehicles/class/eqb
+Mercedes-Benz	EQE Sedan	$74,900	305	https://www.mbusa.com/en/vehicles/class/eqe/sedan
+Mercedes-Benz	EQE SUV	$77,900	279	https://www.mbusa.com/en/vehicles/class/eqe/suv
+Mercedes-Benz	EQS Sedan	$104,400	350	https://www.mbusa.com/en/vehicles/class/eqs/sedan
+Mercedes-Benz	EQS SUV	$104,400	305	https://www.mbusa.com/en/vehicles/class/eqs/suv
+Mercedes-Benz	EQS Maybach	$179,900		https://www.mbusa.com/en/vehicles/class/maybach-eqs/suv
 Mini	Hardtop Cooper SE	$30,900	114	https://www.miniusa.com/model/electric-hardtop.html
 Nissan	Ariya	$43,190	304	https://www.nissanusa.com/vehicles/electric-cars/ariya.html
 Nissan	Leaf	$28,140	212	https://www.nissanusa.com/vehicles/electric-cars/leaf.html

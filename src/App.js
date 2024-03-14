@@ -134,6 +134,7 @@ function App() {
             setDealers={setDealers}
             setUserInfo={setUserInfo}
             userInfo={userInfo}
+            dealers={dealers}
           />
         )}
         {showStep === STEPS.USER_INFO && (

@@ -4,6 +4,7 @@ import {
   AUTOWEB_PROVIDER_ID,
   DETROIT_GENERATOR_ID,
   DETROIT_PASSWORD,
+  MAX_PING_REQUEST,
   SITE_URL,
 } from "Settings";
 
@@ -20,63 +21,6 @@ autowebHeaders.append(
   "Accept",
   "text/html,application/xhtml+xml,application/xml"
 );
-
-function getDealersAutoWeb(carSelection) {
-  return fetch("/autoweb-ping", {
-    body: new URLSearchParams({
-      providerID: AUTOWEB_PROVIDER_ID,
-      year: "2024",
-      make: carSelection.make,
-      model: carSelection.model,
-      trim: "",
-      zipCode: carSelection.postalCode,
-    }).toString(),
-    method: "POST",
-    headers: autowebHeaders,
-  })
-    .then((response) => response.text())
-    .then((str) => _xml.xml2js(str, { compact: true, spaces: 4 }).PingResult)
-    .then((data) =>
-      data.Dealers.Dealer.map((dealer) => ({
-        _provider: "autoweb",
-        name: dealer.Name._text,
-        address: dealer.Address._text,
-        city: dealer.City._text,
-        state: dealer.State._text,
-        uuid: dealer.DealerCode._text || dealer.DealerID._text,
-        distance: dealer.Distance._text,
-        ProgramID: dealer.ProgramID._text,
-        DealerID: dealer.DealerID._text,
-        DealerCode: dealer.DealerCode._text,
-      }))
-    )
-    .catch(() => []);
-}
-
-function getDealersDetroitTradingExchange(carSelection) {
-  return fetch("/api/v2/NewCar/Ping", {
-    method: "POST",
-    headers: detroitHeaders,
-    body: JSON.stringify({
-      generatorId: DETROIT_GENERATOR_ID,
-      password: DETROIT_PASSWORD,
-      siteUrl: SITE_URL,
-      make: carSelection.make,
-      model: carSelection.model,
-      postalCode: carSelection.postalCode,
-    }),
-    redirect: "follow",
-  })
-    .then((response) => response.json())
-    .then((result) =>
-      result.dealers.map((dealer) => ({
-        ...dealer,
-        uuid: dealer.reservationID,
-        _provider: "detroit",
-      }))
-    )
-    .catch(() => []);
-}
 
 function sendToAutoweb(userInfo, carSelection, dealer) {
   const lead = {
@@ -185,43 +129,96 @@ function sendToDetroit(userInfo, carSelection, dealer) {
     .catch((error) => console.log("error", error));
 }
 
+let fetchCounter = 0;
+
+async function getDealersAutoWeb(carSelection) {
+  const res = await fetch("/autoweb-ping", {
+    body: new URLSearchParams({
+      providerID: AUTOWEB_PROVIDER_ID,
+      year: "2024",
+      make: carSelection.make,
+      model: carSelection.model,
+      trim: "",
+      zipCode: carSelection.postalCode,
+    }).toString(),
+    method: "POST",
+    headers: autowebHeaders,
+  });
+  const str = await res.text();
+  const data = await _xml.xml2js(str, { compact: true, spaces: 4 }).PingResult;
+  const cleanData = (data?.Dealers?.Dealer || []).map((dealer) => ({
+    _provider: "autoweb",
+    name: dealer.Name._text,
+    address: dealer.Address._text,
+    city: dealer.City._text,
+    state: dealer.State._text,
+    uuid: dealer.DealerCode._text || dealer.DealerID._text,
+    distance: dealer.Distance._text,
+    ProgramID: dealer.ProgramID._text,
+    DealerID: dealer.DealerID._text,
+    DealerCode: dealer.DealerCode._text,
+  }));
+  fetchCounter++;
+  return new Promise((resolve) => {
+    if (cleanData.length > 0 || fetchCounter >= MAX_PING_REQUEST) {
+      resolve(cleanData);
+    }
+  });
+}
+
+async function getDealersDetroit(carSelection) {
+  const res = await fetch("/api/v2/NewCar/Ping", {
+    method: "POST",
+    headers: detroitHeaders,
+    body: JSON.stringify({
+      generatorId: DETROIT_GENERATOR_ID,
+      password: DETROIT_PASSWORD,
+      siteUrl: SITE_URL,
+      make: carSelection.make,
+      model: carSelection.model,
+      postalCode: carSelection.postalCode,
+    }),
+    redirect: "follow",
+  });
+  const data = await res.json();
+  const cleanData = (data?.dealers || []).map((dealer) => ({
+    ...dealer,
+    uuid: dealer.reservationID,
+    _provider: "detroit",
+  }));
+  fetchCounter++;
+  return new Promise((resolve) => {
+    if (cleanData.length > 0 || fetchCounter >= MAX_PING_REQUEST) {
+      resolve(cleanData);
+    }
+  });
+}
+
 export const ApiHandler = {
-  getCloseDealers: async (carSelection) => {
+  getCloseDealers: (carSelection) => {
     const num = Number(carSelection.postalCode);
     const zips = [];
-    const range = 100;
-    for (let i = num - range; i <= num + range; i++) {
+    for (let i = num - MAX_PING_REQUEST; i <= num + MAX_PING_REQUEST; i++) {
       zips.push(i);
     }
     zips.sort((a, b) => Math.abs(num - a) - Math.abs(num - b));
 
-    for (let i = 0; i < zips.length; i++) {
-      const nZip = zips[i].toString().padStart(5, "0");
-      const autoweb = await getDealersAutoWeb({
-        ...carSelection,
-        postalCode: nZip,
-      });
-      const detroit = await getDealersDetroitTradingExchange({
-        ...carSelection,
-        postalCode: nZip,
-      });
-      if (autoweb.length > 0 || detroit.length > 0) {
-        const all = [...autoweb, ...detroit];
-        console.log(all);
-        all.filter((dealer, index, self) => {
-          // remove duplicates
-          return index === self.findIndex((t) => t.name === dealer.name);
-        });
-        return { dealers: all, postalCode: nZip };
-      }
-    }
-    return { dealers: [], postalCode: carSelection.postalCode };
+    const queries = [];
+    fetchCounter = 0;
+    zips.forEach((zip) => {
+      const nZip = zip.toString().padStart(5, "0");
+      queries.push(
+        getDealersAutoWeb({ ...carSelection, postalCode: nZip }),
+        getDealersDetroit({ ...carSelection, postalCode: nZip })
+      );
+    });
+    return Promise.race(queries);
   },
 
   getCloseDealersSpread: async (carSelection) => {
     return Promise.all([
       getDealersAutoWeb(carSelection),
-      getDealersDetroitTradingExchange(carSelection),
+      getDealersDetroit(carSelection),
     ]).then((values) => ({
       autoweb: values[0],
       detroit: values[1],

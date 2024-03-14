@@ -167,7 +167,6 @@ function UserInfo({
                     padding: "5px 0",
                   },
                   "& .MuiTypography-root": {
-                    fontWeight: "bold",
                     fontFamily: "Gotham",
                   },
                 }}
@@ -182,7 +181,9 @@ function UserInfo({
                     onChange={handleCheckboxChange(dealer)}
                   />
                 }
-                label={`${dealer.name} ${dealer.city} (${dealer.distance} miles)`}
+                label={`${dealer.name} ${dealer.city} (${Number(
+                  dealer.distance
+                ).toFixed(0)} miles)`}
               />
             </div>
           ))}
