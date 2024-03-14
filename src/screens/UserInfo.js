@@ -22,7 +22,7 @@ function UserInfo({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const showAddress = ["Volvo", "Subaru"].includes(selection.make);
+  const showAddress = ["GM", "Volvo", "Subaru"].includes(selection.make);
 
   const handleCheckboxChange = (dealer) => (event) => {
     let aux = [];
