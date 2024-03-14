@@ -52,6 +52,7 @@ function SelectMake({
       setModels([{ value: "", label: "Select Make first" }]);
     } else {
       setModels(modelsPerMake);
+      setSelection({ ...selection, model: modelsPerMake[0].value });
     }
   }, [selection.make]);
 

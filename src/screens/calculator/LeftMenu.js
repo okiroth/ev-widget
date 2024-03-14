@@ -29,7 +29,12 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
         )
       ),
     ].map((model) => ({ value: model, label: model }));
-    setModels(modelsPerMake);
+    if (modelsPerMake.length === 0) {
+      setModels([{ value: "", label: "Select Make first" }]);
+    } else {
+      setModels(modelsPerMake);
+      setSelection({ ...selection, model: modelsPerMake[0].value });
+    }
   }, [selection.make]);
 
   useEffect(() => {
