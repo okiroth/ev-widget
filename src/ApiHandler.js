@@ -4,7 +4,7 @@ import {
   AUTOWEB_PROVIDER_ID,
   DETROIT_GENERATOR_ID,
   DETROIT_PASSWORD,
-  MAX_PING_REQUEST,
+  ZIPS_LOOKOUT_RANGE,
   SITE_URL,
 } from "Settings";
 
@@ -129,7 +129,34 @@ function sendToDetroit(userInfo, carSelection, dealer) {
     .catch((error) => console.log("error", error));
 }
 
-let fetchCounter = 0;
+export let fetchWatcher = { key: undefined, value: 0 };
+
+function stopFetchWatcher(data, carSelection) {
+  const keyCheck =
+    fetchWatcher.key === `${carSelection.make}${carSelection.model}`;
+
+  let done = false;
+
+  if (!keyCheck) return done;
+
+  fetchWatcher.value++;
+
+  const hasData = data.length > 0;
+  const limitReached = fetchWatcher.value >= ZIPS_LOOKOUT_RANGE * 4;
+
+  if (hasData || limitReached) {
+    done = true;
+  }
+
+  console.log({
+    p: carSelection.postalCode,
+    f: fetchWatcher.value,
+    done,
+    limitReached,
+    data: data.length,
+  });
+  return done;
+}
 
 async function getDealersAutoWeb(carSelection) {
   const res = await fetch("/autoweb-ping", {
@@ -158,9 +185,8 @@ async function getDealersAutoWeb(carSelection) {
     DealerID: dealer.DealerID._text,
     DealerCode: dealer.DealerCode._text,
   }));
-  fetchCounter++;
   return new Promise((resolve) => {
-    if (cleanData.length > 0 || fetchCounter >= MAX_PING_REQUEST) {
+    if (stopFetchWatcher(cleanData, carSelection)) {
       resolve(cleanData);
     }
   });
@@ -186,9 +212,8 @@ async function getDealersDetroit(carSelection) {
     uuid: dealer.reservationID,
     _provider: "detroit",
   }));
-  fetchCounter++;
   return new Promise((resolve) => {
-    if (cleanData.length > 0 || fetchCounter >= MAX_PING_REQUEST) {
+    if (stopFetchWatcher(cleanData, carSelection)) {
       resolve(cleanData);
     }
   });
@@ -197,14 +222,19 @@ async function getDealersDetroit(carSelection) {
 export const ApiHandler = {
   getCloseDealers: (carSelection) => {
     const num = Number(carSelection.postalCode);
-    const zips = [];
-    for (let i = num - MAX_PING_REQUEST; i <= num + MAX_PING_REQUEST; i++) {
+    const zips = [num];
+    for (let i = num - ZIPS_LOOKOUT_RANGE; i <= num + ZIPS_LOOKOUT_RANGE; i++) {
+      if (zips.includes(i)) continue;
       zips.push(i);
     }
     zips.sort((a, b) => Math.abs(num - a) - Math.abs(num - b));
+    console.log({ zips });
 
     const queries = [];
-    fetchCounter = 0;
+    fetchWatcher = {
+      key: `${carSelection.make}${carSelection.model}`,
+      value: 0,
+    };
     zips.forEach((zip) => {
       const nZip = zip.toString().padStart(5, "0");
       queries.push(

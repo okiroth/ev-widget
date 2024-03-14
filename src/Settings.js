@@ -6,4 +6,5 @@ export const DETROIT_PASSWORD =
 
 export const AUTOWEB_PROVIDER_ID = 35270;
 
-export const MAX_PING_REQUEST = 20;
+// it will Ping 4 times this number, +/- per zip code, and the AutoWeb and Detroit APIs
+export const ZIPS_LOOKOUT_RANGE = 10;
