@@ -16,8 +16,8 @@ const TopSection = ({ selection }) => {
         <div className="title">Find an electric vehicle near you</div>
         <div className="row-spacer" />
         <div className="subtitle">
-          Tell us a little bit about yourself to receive offers from dealers
-          near you
+          Tell us where you live and which EV you're interested in learning more
+          about
         </div>
       </div>
       <div className="car_image">
