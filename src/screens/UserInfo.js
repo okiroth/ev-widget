@@ -97,7 +97,8 @@ function UserInfo({
               </div>
               <div className="row-spacer" />
               <div className="subtitle">
-                You’re in luck! We’ve found the following dealerships near you.
+                Tell us where you live and which EV you're interested in
+                learning more about
               </div>
             </div>
             <div className="row-spacer" />
