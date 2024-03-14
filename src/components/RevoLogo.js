@@ -2,7 +2,12 @@ export default function RevoLogo() {
   return (
     <div className="row center">
       <div>
-        <a target="_blank" className="link" href="tryrevo.com">
+        <a
+          target="_blank"
+          className="link"
+          href="https://tryrevo.com"
+          rel="noreferrer"
+        >
           <svg
             width="75"
             height="28"

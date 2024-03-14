@@ -22,6 +22,8 @@ function UserInfo({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const showAddress = ["Volvo", "Subaru"].includes(selection.make);
+
   const handleCheckboxChange = (dealer) => (event) => {
     let aux = [];
     const uuid = dealer.uuid;
@@ -150,6 +152,21 @@ function UserInfo({
             />
           </div>
         </div>
+        {showAddress && (
+          <div className="row">
+            <div className="column">
+              <InputLabel className="label">Street Address*</InputLabel>
+              <TextField
+                placeholder="123 Main St."
+                value={userInfo.lastName}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, address: e.target.value })
+                }
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              />
+            </div>
+          </div>
+        )}
         {error && <div className="error">{error}</div>}
 
         <div className="row-spacer" />

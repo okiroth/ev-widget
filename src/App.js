@@ -65,6 +65,7 @@ function App() {
     lastName: "",
     email: "",
     phone: "",
+    address: "",
     selected: [],
   });
   const [dealers, setDealers] = useState([]);
