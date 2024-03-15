@@ -82,14 +82,17 @@ function ZipCode({
             <TextField
               placeholder="12345"
               value={selection.postalCode}
-              onChange={(e) =>
-                setSelection({ ...selection, postalCode: e.target.value })
-              }
+              onChange={(e) => {
+                setError("");
+                setErrorPostalCode(false);
+                setSelection({ ...selection, postalCode: e.target.value });
+              }}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
             {errorpostalCode && (
               <FormHelperText>Invalid Zip Code</FormHelperText>
             )}
+            <div className="row-spacer" />
             <div className="row-spacer" />
             <div className="column">
               {error && <div className="error">{error}</div>}
@@ -112,7 +115,7 @@ function ZipCode({
             <img onError={() => setImageSrc("/car.png")} src={imgSrc} alt="" />
           </div>
         </div>
-        <div className="row-spacer"></div>
+        <div className="row-spacer" />
         {noDealers && (
           <div className="row center subtitle">
             We couldn’t find any nearby dealerships for that Make and Model.

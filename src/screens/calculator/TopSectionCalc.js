@@ -46,6 +46,7 @@ const TopSectionCalc = ({ lease }) => {
             </div>
             <div>With federal tax credit</div>
           </div>
+          <div className="row-spacer" />
           <div className="column">
             <div className="big_number text-gray">
               ${withoutTaxCredit.toFixed(0)}*

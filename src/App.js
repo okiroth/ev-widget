@@ -11,6 +11,8 @@ import TopSectionCalc from "screens/calculator/TopSectionCalc";
 import ZipCode from "screens/calculator/ZipCode";
 import ReactGA from "react-ga4";
 
+const isCalculator = window.location.href.includes("calculator");
+
 ReactGA.initialize("G-SFZ1ST8K3D", {
   debug: false,
   titleCase: false,
@@ -40,6 +42,9 @@ const APP_THEME = createTheme({
 });
 
 const INPUT_PLACEHOLDER = {
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: isCalculator ? "#2288FF" : "",
+  },
   "& .MuiSelect-select .notranslate::after": "Select"
     ? {
         content: '"Select"',
@@ -74,7 +79,7 @@ function App() {
     return <Status />;
   }
 
-  if (window.location.href.includes("calculator")) {
+  if (isCalculator) {
     return (
       <div className="calculator_wrapper">
         <LeftMenu
@@ -84,8 +89,8 @@ function App() {
           lease={lease}
           setLease={setLease}
         />
-        <div className="calc-content column">
-          <TopSectionCalc lease={lease} />
+        <div className="column">
+          <TopSectionCalc showStep={showStep} lease={lease} />
           <div className="row-spacer" />
           <div className="steps_section">
             {showStep === STEPS.SELECT_MAKE && (
@@ -124,7 +129,7 @@ function App() {
   return (
     <div className="wrapper">
       <div className="top_section">
-        <TopSection selection={selection} />
+        <TopSection showStep={showStep} selection={selection} />
       </div>
       <div className="steps_section">
         {showStep === STEPS.SELECT_MAKE && (

@@ -6,6 +6,7 @@ import {
   DETROIT_PASSWORD,
   ZIPS_LOOKOUT_RANGE,
   SITE_URL,
+  ZIPS_LOOKOUT_STEP,
 } from "Settings";
 
 var _xml = require("xml-js");
@@ -144,7 +145,8 @@ function stopFetchWatcher(data, carSelection) {
   fetchWatcher.value++;
 
   const hasData = data.length > 0;
-  const limitReached = fetchWatcher.value >= ZIPS_LOOKOUT_RANGE * 4;
+  const limitReached =
+    fetchWatcher.value >= (ZIPS_LOOKOUT_RANGE / ZIPS_LOOKOUT_STEP) * 4;
 
   if (hasData || limitReached) {
     done = true;
@@ -225,7 +227,11 @@ export const ApiHandler = {
   getCloseDealers: (carSelection) => {
     const num = Number(carSelection.postalCode);
     const zips = [num];
-    for (let i = num - ZIPS_LOOKOUT_RANGE; i <= num + ZIPS_LOOKOUT_RANGE; i++) {
+    for (
+      let i = num - ZIPS_LOOKOUT_RANGE;
+      i <= num + ZIPS_LOOKOUT_RANGE;
+      i += ZIPS_LOOKOUT_STEP
+    ) {
       if (zips.includes(i)) continue;
       zips.push(i);
     }

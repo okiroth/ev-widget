@@ -183,6 +183,7 @@ function UserInfo({
                 sx={{
                   "& .MuiCheckbox-root": {
                     padding: "5px 0",
+                    marginRight: "6px",
                   },
                   "& .MuiTypography-root": {
                     fontFamily: "Gotham",

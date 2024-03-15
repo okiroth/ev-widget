@@ -11,8 +11,6 @@ BMW	i7	$105,700	321	https://www.bmwusa.com/build-your-own.html#/series/i7/sedan
 Cadillac	Lyriq	$58,590	314	https://www.cadillac.com/electric/lyriq
 Chevrolet	Bolt EUV	$27,800	247	https://www.chevrolet.com/electric/bolt-euv
 Chevrolet	Bolt EV	$26,500	259	https://www.chevrolet.com/electric/bolt-ev
-Genesis	Electrified G80	$74,375	282	https://www.genesis.com/us/en/electrified-g80
-Genesis	GV60	$52,000	294	https://www.genesis.com/us/en/gv60
 Hyundai	Kona Electric	$32,675	261	https://www.hyundaiusa.com/us/en/vehicles/kona-electric
 Hyundai	Ioniq 5	$41,800	303	https://www.hyundaiusa.com/us/en/vehicles/ioniq-5
 Hyundai	Ioniq 6	$42,450	361	https://www.hyundaiusa.com/us/en/vehicles/ioniq-6/compare-specs
