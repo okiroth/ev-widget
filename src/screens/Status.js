@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+// import { CARS_DATA_ARRAY_SMALL } from "data/2024 EV Data - EV Data_Small";
 import { CARS_DATA_ARRAY } from "data/2024 EV Data - EV Data";
 import { ApiHandler } from "ApiHandler";
 
 export default function Status() {
   const [errors, setErrors] = useState([]);
-  const [errors2, setErrors2] = useState([]);
+  const [foundCars, setFoundCars] = useState([]);
+  const [foundBy, setFoundBy] = useState({});
   const [searched, setSearched] = useState(0);
   const [foundDetroit, setFoundDetroit] = useState(0);
   const [foundAutoweb, setFoundAutoweb] = useState(0);
@@ -13,30 +15,48 @@ export default function Status() {
 
   useEffect(() => {
     ZIP_CODES.forEach((zip) => {
-      CARS_DATA_ARRAY.forEach((car) => {
-        setSearched((prev) => prev + 1);
-        ApiHandler.getCloseDealersSpread({
-          make: car.make,
-          model: car.model,
-          postalCode: zip,
-        }).then((res) => {
-          if (res.detroit.length > 0) {
-            setFoundDetroit((prev) => prev + 1);
+      CARS_DATA_ARRAY.forEach(({ make, model }) => {
+        ApiHandler.getCloseDealersSpread({ make, model, postalCode: zip }).then(
+          ([autoweb, detroit]) => {
+            const key = `${make}${model}`;
+            setFoundBy((prev) => ({
+              ...prev,
+              [key]: { ...prev[key], [zip]: [autoweb.length, detroit.length] },
+            }));
+
+            setFoundCars((prev) => {
+              for (let ii = 0; ii < prev.length; ii++) {
+                if (prev[ii][0] === `${zip}${make}${model}`) {
+                  return prev;
+                }
+              }
+              return [
+                ...prev,
+                [
+                  `${zip}${make}${model}`,
+                  { zip, make, model },
+                  autoweb,
+                  detroit,
+                ],
+              ];
+            });
           }
-          if (res.autoweb.length > 0) {
-            setFoundAutoweb((prev) => prev + 1);
-          }
-          setErrors2((prev) => [
-            ...prev,
-            `[${zip}] ${res.autoweb.length} | ${res.detroit.length} - ${
-              car.make
-            } ${car.model} ${res.total > 0 ? "✅" : ""}
-            ${res.both ? "✅✅✅✅" : ""}`,
-          ]);
-        });
+        );
       });
     });
   }, []);
+
+  useEffect(() => {
+    let autowebCounter = 0;
+    let detroitCounter = 0;
+    foundCars.forEach(([key, { zip, make, model }, autoweb, detroit]) => {
+      autowebCounter += autoweb.length;
+      detroitCounter += detroit.length;
+    });
+    setFoundAutoweb(autowebCounter);
+    setFoundDetroit(detroitCounter);
+    setSearched(Object.keys(foundCars).length);
+  }, [foundCars]);
 
   return (
     <div>
@@ -44,15 +64,35 @@ export default function Status() {
       <p>Searched: {searched}</p>
       <p>Autoweb: {foundAutoweb}</p>
       <p>Detroit: {foundDetroit}</p>
-      {errors2.length > 0 && (
-        <div>
-          <ul>
-            {errors2.map((error, idx) => (
-              <li key={idx}>{error}</li>
-            ))}
-          </ul>
+      {Object.entries(foundBy).map(([car, zips]) => (
+        <div className="steps_section" key={car}>
+          <h3>{car}</h3>
+          {Object.entries(zips).map(([zip, [autoweb, detroit]]) => (
+            <div className="row left" key={zip}>
+              <div style={{ width: 70 }}>{zip}:</div>
+              <div>
+                [{autoweb}, {detroit}]
+              </div>
+            </div>
+          ))}
         </div>
-      )}
+      ))}
+      <div>
+        <ul>
+          {foundCars.map(([key, { zip, make, model }, autoweb, detroit]) => (
+            <div className="row left" key={key}>
+              <div style={{ width: 80 }}>[{zip}]</div>
+              <div style={{ width: 50 }}>
+                {autoweb.length} | {detroit.length}
+              </div>
+              <div>
+                {make} {model}
+              </div>
+              <div>{autoweb.length || detroit.length > 0 ? "✅" : ""}</div>
+            </div>
+          ))}
+        </ul>
+      </div>
       <br />
       <br />
       <h1>Check Images</h1>

@@ -162,7 +162,7 @@ function stopFetchWatcher(data, carSelection) {
   return done;
 }
 
-async function getDealersAutoWeb(carSelection) {
+async function getDealersAutoWeb(carSelection, force = false) {
   const res = await fetch("/autoweb-ping", {
     body: new URLSearchParams({
       providerID: AUTOWEB_PROVIDER_ID,
@@ -177,6 +177,15 @@ async function getDealersAutoWeb(carSelection) {
   });
   const str = await res.text();
   const data = await _xml.xml2js(str, { compact: true, spaces: 4 }).PingResult;
+
+  // If there is only one dealer, it will not be an array, blame the API...
+  if (
+    data?.Dealers?.Dealer !== undefined &&
+    data?.Dealers?.Dealer.length === undefined
+  ) {
+    data.Dealers.Dealer = [data?.Dealers?.Dealer];
+  }
+
   const cleanData = (data?.Dealers?.Dealer || []).map((dealer) => ({
     _provider: "autoweb",
     name: dealer.Name._text,
@@ -190,13 +199,13 @@ async function getDealersAutoWeb(carSelection) {
     DealerCode: dealer.DealerCode._text,
   }));
   return new Promise((resolve) => {
-    if (stopFetchWatcher(cleanData, carSelection)) {
+    if (stopFetchWatcher(cleanData, carSelection) || force === true) {
       resolve(cleanData);
     }
   });
 }
 
-async function getDealersDetroit(carSelection) {
+async function getDealersDetroit(carSelection, force = false) {
   const res = await fetch("/api/v2/NewCar/Ping", {
     method: "POST",
     headers: detroitHeaders,
@@ -217,7 +226,7 @@ async function getDealersDetroit(carSelection) {
     _provider: "detroit",
   }));
   return new Promise((resolve) => {
-    if (stopFetchWatcher(cleanData, carSelection)) {
+    if (stopFetchWatcher(cleanData, carSelection) || force === true) {
       resolve(cleanData);
     }
   });
@@ -255,14 +264,9 @@ export const ApiHandler = {
 
   getCloseDealersSpread: async (carSelection) => {
     return Promise.all([
-      getDealersAutoWeb(carSelection),
-      getDealersDetroit(carSelection),
-    ]).then((values) => ({
-      autoweb: values[0],
-      detroit: values[1],
-      total: values[0].length + values[1].length,
-      both: values[0].length > 0 && values[1].length > 0,
-    }));
+      getDealersAutoWeb(carSelection, true),
+      getDealersDetroit(carSelection, true),
+    ]);
   },
 
   sendSelectedDealers: async (userInfo, carSelection, selectedDealers) => {
