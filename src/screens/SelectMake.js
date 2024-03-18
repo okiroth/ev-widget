@@ -174,6 +174,7 @@ function SelectMake({
           <div className="column">
             <InputLabel className="label">Make</InputLabel>
             <Select
+              id="user-car-make"
               sx={INPUT_PLACEHOLDER}
               value={selection.make}
               onChange={(e) =>
@@ -190,6 +191,7 @@ function SelectMake({
           <div className="column">
             <InputLabel className="label">Model</InputLabel>
             <Select
+              id="user-car-model"
               sx={INPUT_PLACEHOLDER}
               value={selection.model}
               onChange={(e) =>
@@ -208,6 +210,7 @@ function SelectMake({
           <div>
             <InputLabel className="label">Zip Code</InputLabel>
             <TextField
+              id="user-zip-code"
               placeholder="12345"
               value={selection.postalCode}
               onChange={(e) =>

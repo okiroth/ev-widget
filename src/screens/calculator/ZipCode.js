@@ -80,6 +80,7 @@ function ZipCode({
           <div className="column">
             <InputLabel className="label">Zip Code</InputLabel>
             <TextField
+              id="user-car-make"
               placeholder="12345"
               value={selection.postalCode}
               onChange={(e) => {

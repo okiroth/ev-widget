@@ -57,6 +57,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
         <div className="column">
           <InputLabel className="label">Make</InputLabel>
           <Select
+            id="user-car-make"
             sx={INPUT_PLACEHOLDER}
             value={selection.make}
             onChange={(e) =>
@@ -74,6 +75,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
         <div className="column">
           <InputLabel className="label">Model</InputLabel>
           <Select
+            id="user-car-model"
             sx={INPUT_PLACEHOLDER}
             value={selection.model}
             onChange={(e) =>
