@@ -9,14 +9,8 @@ import { createTheme } from "@mui/material";
 import LeftMenu from "screens/calculator/LeftMenu";
 import TopSectionCalc from "screens/calculator/TopSectionCalc";
 import ZipCode from "screens/calculator/ZipCode";
-import ReactGA from "react-ga4";
 
 const isCalculator = window.location.href.includes("calculator");
-
-ReactGA.initialize("G-SFZ1ST8K3D", {
-  debug: false,
-  titleCase: false,
-});
 
 const STEPS = {
   SELECT_MAKE: 0,
@@ -78,6 +72,8 @@ function App() {
   if (window.location.href.includes("status")) {
     return <Status />;
   }
+
+  console.log(window.dataLayer);
 
   if (isCalculator) {
     return (
