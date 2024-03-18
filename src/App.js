@@ -73,9 +73,8 @@ function App() {
     return <Status />;
   }
 
-  console.log(window.dataLayer);
-
   if (isCalculator) {
+    document.title = "rEVo Leasing Calculator";
     return (
       <div className="calculator_wrapper">
         <LeftMenu
@@ -122,6 +121,7 @@ function App() {
     );
   }
 
+  document.title = "rEVo Find a Dealer";
   return (
     <div className="wrapper">
       <div className="top_section">
