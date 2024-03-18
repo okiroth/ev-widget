@@ -104,6 +104,7 @@ function LeftMenu({ setSelection, selection, lease, setLease }) {
           <div className="column">
             <InputLabel className="label">Down Payment</InputLabel>
             <CurrencyTextField
+              id="user-lease-downpayment"
               variant="outlined"
               decimalPlaces={0}
               value={lease.downPayment}
