@@ -1,4 +1,3 @@
-import { track } from "@vercel/analytics";
 import {
   AUTOWEB_PROVIDER_ID,
   DETROIT_GENERATOR_ID,
@@ -73,21 +72,16 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
     .then((response) => {
       const error =
         response["soap:Envelope"]["soap:Body"].PostResponse.PostResult.Errors
-          ?.Error?.Message?._text;
-      track("autoweb_submit", {
-        email: userInfo.email,
-        uuid: dealer.uuid,
-        name: dealer.name,
+          ?.Error?.Message?._text || false;
+      const track = {
+        event: "autoweb_submit",
+        user: userInfo,
+        dealer: dealer,
+        api_response: response,
         error: error,
-      });
-      if (error) {
-        dataLayer.push({
-          event: "autoweb_submit_error",
-          uuid: dealer.uuid,
-          name: dealer.name,
-          error: error,
-        });
-      }
+      };
+      dataLayer.push(track);
+      console.log(track);
     })
     .catch((error) => console.log("error", error));
 }
@@ -115,21 +109,16 @@ function sendToDetroit(userInfo, carSelection, dealer) {
 
   return fetch("/api/v2/NewCar/Post", requestOptions)
     .then((response) => response.json())
-    .then((result) => {
-      track("detroit_submit", {
-        email: userInfo.email,
-        uuid: dealer.uuid,
-        name: dealer.name,
-        error: result.errorMessage,
-      });
-      if (result.errorMessage) {
-        dataLayer.push({
-          event: "detroit_submit_error",
-          uuid: dealer.uuid,
-          name: dealer.name,
-          error: result.errorMessage,
-        });
-      }
+    .then((response) => {
+      const track = {
+        event: "detroit_submit",
+        user: userInfo,
+        dealer: dealer,
+        api_response: response,
+        error: response.errorMessage || false,
+      };
+      dataLayer.push(track);
+      console.log(track);
     })
     .catch((error) => console.log("error", error));
 }
@@ -272,26 +261,12 @@ export const ApiHandler = {
   },
 
   sendSelectedDealers: async (userInfo, carSelection, selectedDealers) => {
-    dataLayer.push({
-      event: "selected_dealers_submitted",
-      number_of_dealers: selectedDealers.length,
-    });
     Promise.all(
       selectedDealers.map((dealer) => {
         if (dealer._provider === "detroit") {
-          dataLayer.push({
-            event: "detroit_selected_dealer_submitted",
-            uuid: dealer.uuid,
-            name: dealer.name,
-          });
           return sendToDetroit(userInfo, carSelection, dealer);
         }
         if (dealer._provider === "autoweb") {
-          dataLayer.push({
-            event: "autoweb_selected_dealer_submitted",
-            uuid: dealer.uuid,
-            name: dealer.name,
-          });
           return sendToAutoweb(userInfo, carSelection, dealer);
         }
         return undefined;
