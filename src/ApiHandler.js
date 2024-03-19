@@ -76,6 +76,7 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
       const track = {
         event: "autoweb_submit",
         user: userInfo,
+        selection: carSelection,
         dealer: dealer,
         api_response: response,
         error: error,
@@ -112,6 +113,7 @@ function sendToDetroit(userInfo, carSelection, dealer) {
     .then((response) => {
       const track = {
         event: "detroit_submit",
+        selection: carSelection,
         user: userInfo,
         dealer: dealer,
         api_response: response,
