@@ -7,7 +7,7 @@ const TopSection = ({ showStep, selection }) => {
 
   const stepText = {
     [STEPS.SELECT_MAKE]:
-      "Tell us where and which EV you're interested in learning more about",
+      "Tell us where you live and which EV you're interested in learning more about",
     [STEPS.USER_INFO]:
       "Share your contact information to receive exclusive offers from dealers near you",
     [STEPS.SUBMITTED]: "Thank you!",
