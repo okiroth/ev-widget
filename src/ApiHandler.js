@@ -22,6 +22,22 @@ autowebHeaders.append(
   "text/html,application/xhtml+xml,application/xml"
 );
 
+function trackApiCall(obj) {
+  const url = 'https://script.google.com/macros/s/AKfycbzfSc6akHuxnWOtd3Fsh1qz8GNrCIZlOIGjgyaS3Y5pXobSSlo3SfPUB8hFrS0O_Vai/exec';
+  let formData = new FormData();
+    for (let key in obj) {
+      formData.append(key, JSON.stringify(obj[key]));
+    }
+  fetch(url, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData,
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
 function sendToAutoweb(userInfo, carSelection, dealer) {
   const lead = {
     Vehicle: {
@@ -81,6 +97,7 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
         api_response: response,
         error: error,
       };
+      trackApiCall(track)
       dataLayer.push(track);
       console.log(track);
     })
@@ -119,6 +136,7 @@ function sendToDetroit(userInfo, carSelection, dealer) {
         api_response: response,
         error: response.errorMessage || false,
       };
+      trackApiCall(track);
       dataLayer.push(track);
       console.log(track);
     })
