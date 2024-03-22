@@ -89,15 +89,14 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
       const error =
         response["soap:Envelope"]["soap:Body"].PostResponse.PostResult.Errors
           ?.Error?.Message?._text || "none";
-      const track = {
-        event: "autoweb_submit",
+      trackApiCall({
+        provider: "autoweb",
         user: userInfo,
         selection: carSelection,
         dealer: dealer,
         api_response: response,
         error: error,
-      };
-      trackApiCall(track);
+      });
       dataLayer.push({
         event: "dealer_sending_done",
         provider: "autoweb",
@@ -134,19 +133,18 @@ function sendToDetroit(userInfo, carSelection, dealer) {
     .then((response) => response.json())
     .then((response) => {
       const error = response.errorMessage || "none";
-      const track = {
-        event: "detroit_submit",
-        selection: carSelection,
-        user: userInfo,
-        dealer: dealer,
-        api_response: response,
-        error,
-      };
-      trackApiCall(track);
       dataLayer.push({
         event: "dealer_sending_done",
         provider: "detroit",
         dealer_uuid: dealer.uuid,
+        error,
+      });
+      trackApiCall({
+        provider: "detroit",
+        selection: carSelection,
+        user: userInfo,
+        dealer: dealer,
+        api_response: response,
         error,
       });
       return error;
