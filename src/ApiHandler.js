@@ -23,18 +23,18 @@ autowebHeaders.append(
 );
 
 function trackApiCall(obj) {
-  const url = 'https://script.google.com/macros/s/AKfycbzfSc6akHuxnWOtd3Fsh1qz8GNrCIZlOIGjgyaS3Y5pXobSSlo3SfPUB8hFrS0O_Vai/exec';
+  const url =
+    "https://script.google.com/macros/s/AKfycbzfSc6akHuxnWOtd3Fsh1qz8GNrCIZlOIGjgyaS3Y5pXobSSlo3SfPUB8hFrS0O_Vai/exec";
   let formData = new FormData();
-    for (let key in obj) {
-      formData.append(key, JSON.stringify(obj[key]));
-    }
+  for (let key in obj) {
+    formData.append(key, JSON.stringify(obj[key]));
+  }
   fetch(url, {
-    method: 'POST',
-    mode: 'no-cors',
+    method: "POST",
+    mode: "no-cors",
     body: formData,
-  })
-  .catch((error) => {
-    console.error('Error:', error);
+  }).catch((error) => {
+    console.error("Error:", error);
   });
 }
 
@@ -88,7 +88,7 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
     .then((response) => {
       const error =
         response["soap:Envelope"]["soap:Body"].PostResponse.PostResult.Errors
-          ?.Error?.Message?._text || false;
+          ?.Error?.Message?._text || "none";
       const track = {
         event: "autoweb_submit",
         user: userInfo,
@@ -97,9 +97,14 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
         api_response: response,
         error: error,
       };
-      trackApiCall(track)
-      dataLayer.push(track);
-      console.log(track);
+      trackApiCall(track);
+      dataLayer.push({
+        event: "dealer_sending_done",
+        provider: "autoweb",
+        dealer_uuid: dealer.uuid,
+        error,
+      });
+      return error;
     })
     .catch((error) => console.log("error", error));
 }
@@ -128,17 +133,23 @@ function sendToDetroit(userInfo, carSelection, dealer) {
   return fetch("/api/v2/NewCar/Post", requestOptions)
     .then((response) => response.json())
     .then((response) => {
+      const error = response.errorMessage || "none";
       const track = {
         event: "detroit_submit",
         selection: carSelection,
         user: userInfo,
         dealer: dealer,
         api_response: response,
-        error: response.errorMessage || false,
+        error,
       };
       trackApiCall(track);
-      dataLayer.push(track);
-      console.log(track);
+      dataLayer.push({
+        event: "dealer_sending_done",
+        provider: "detroit",
+        dealer_uuid: dealer.uuid,
+        error,
+      });
+      return error;
     })
     .catch((error) => console.log("error", error));
 }
@@ -280,9 +291,10 @@ export const ApiHandler = {
     ]);
   },
 
-  sendSelectedDealers: async (userInfo, carSelection, selectedDealers) => {
+  sendSelectedDealers: async (userInfo, carSelection, dealers) => {
+    dataLayer.push({ event: "dealers_submit", num_dealers: dealers.length });
     Promise.all(
-      selectedDealers.map((dealer) => {
+      dealers.map((dealer) => {
         if (dealer._provider === "detroit") {
           return sendToDetroit(userInfo, carSelection, dealer);
         }
@@ -291,7 +303,14 @@ export const ApiHandler = {
         }
         return undefined;
       })
-    );
+    ).then((errors) => {
+      const track = {
+        event: "dealers_submit_finished",
+        num_dealers_sent: dealers.length,
+        num_dealers_errors: errors.filter((e) => e !== "none").length,
+      };
+      dataLayer.push(track);
+    });
   },
 
   getCloseDealersDummy: async () => {
