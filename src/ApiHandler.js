@@ -172,14 +172,6 @@ function stopFetchWatcher(data, carSelection) {
   if (hasData || limitReached) {
     done = true;
   }
-
-  console.log({
-    p: carSelection.postalCode,
-    f: fetchWatcher.value,
-    done,
-    limitReached,
-    data: data.length,
-  });
   return done;
 }
 
@@ -266,7 +258,6 @@ export const ApiHandler = {
       zips.push(i);
     }
     zips.sort((a, b) => Math.abs(num - a) - Math.abs(num - b));
-    console.log({ zips });
 
     const queries = [];
     fetchWatcher = {
