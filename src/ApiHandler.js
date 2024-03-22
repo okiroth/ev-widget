@@ -5,6 +5,7 @@ import {
   ZIPS_LOOKOUT_RANGE,
   SITE_URL,
   ZIPS_LOOKOUT_STEP,
+  AUTOWEB_YEAR,
 } from "Settings";
 
 const _xml = require("xml-js");
@@ -42,7 +43,7 @@ function sendToAutoweb(userInfo, carSelection, dealer) {
   const lead = {
     Vehicle: {
       Status: "New",
-      Year: "2024",
+      Year: AUTOWEB_YEAR,
       Make: carSelection.make,
       Model: carSelection.model,
     },
@@ -186,7 +187,7 @@ async function getDealersAutoWeb(carSelection, force = false) {
   const res = await fetch("/autoweb-ping", {
     body: new URLSearchParams({
       providerID: AUTOWEB_PROVIDER_ID,
-      year: "2024",
+      year: AUTOWEB_YEAR,
       make: carSelection.make,
       model: carSelection.model,
       trim: "",
