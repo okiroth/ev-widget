@@ -16,5 +16,11 @@
       "source": "/autoweb-post",
       "destination": "http://leadengine.services.autobytel.com/leadengine/DropZone.asmx"
     }
+  ],
+  "headers": [
+    {
+      "key": "Content-Security-Policy",
+      "value": "default-src 'self' *.nerdwallet.biz *nerdwallet.com; script-src 'self' *.nerdwallet.biz *nerdwallet.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' *.nerdwallet.biz *nerdwallet.com 'unsafe-inline'; img-src 'self' *.nerdwallet.biz *nerdwallet.com data:; font-src 'self' *.nerdwallet.biz *nerdwallet.com; connect-src 'self' *.nerdwallet.biz *nerdwallet.com; media-src 'self' *.nerdwallet.biz *nerdwallet.com; object-src 'self' *.nerdwallet.biz *nerdwallet.com; frame-src 'self' *.nerdwallet.biz *nerdwallet.com; sandbox allow-forms allow-same-origin allow-scripts; report-uri /csp-report"
+    }
   ]
 }
