@@ -33,8 +33,8 @@ Audi	Q4 e-tron	$49,800	265	https://www.audiusa.com/us/web/en/models/electric-mod
 Hyundai	Kona Electric	$32,675	261	https://www.hyundaiusa.com/us/en/vehicles/kona-electric
 Chevrolet	Bolt EV	$26,500	259	https://www.chevrolet.com/electric/bolt-ev
 Audi	SQ8 e-tron	$89,000	253	https://www.audiusa.com/us/web/en/models/q8-e-tron/sq8-e-tron/2024/overview.html
-Kia	Niro EV	$39,600	253	https://www.kia.com/us/en/niro-ev
 Kia	EV9	$54,900	304	https://www.kia.com/us/en/ev9
+Kia	Niro EV	$39,600	253	https://www.kia.com/us/en/niro-ev
 Toyota	bZ4X	$43,070	252	https://www.toyota.com/bz4x/
 Audi	e-tron GT	$106,500	249	https://www.audiusa.com/us/web/en/models/e-tron-gt/e-tron-gt/2024/overview.html
 Chevrolet	Bolt EUV	$27,800	247	https://www.chevrolet.com/electric/bolt-euv
