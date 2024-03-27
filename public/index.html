@@ -51,6 +51,18 @@
     </style>
   </head>
   <body>
+    <script>
+      window.iFrameResizer = {
+        onReady: function () {
+          var myId = window.parentIFrame.getId();
+          console.log(
+            "----> The ID of the iFrame in the parent page is: " + myId
+          );
+          const aux = window.parentIFrame.autoResize(true);
+          console.log("----> aux: ", aux);
+        },
+      };
+    </script>
     <script src="/js/contentWindow.min.js"></script>
     <!-- Google Tag Manager (noscript) -->
     <noscript
