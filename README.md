@@ -13,7 +13,7 @@ But if you are using a library or JS that resizes iframes dynamically, you can p
 ```html
 <div style="margin: 0px; padding: 0px; overflow: hidden">
   <iframe
-    id="iframe_1"
+    id="revo-iframe-0"
     src=" REPLACE URL HERE "
     width="100%"
     height="100px"
