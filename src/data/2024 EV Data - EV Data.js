@@ -54,4 +54,5 @@ export const CARS_DATA_ARRAY = CARS_DATA.split("\n")
     const [make, model, price, range, url] = line.split("\t");
     return { make, model, price, range, url };
   })
-  .filter((car) => car.make && car.model && car.price && car.range && car.url);
+  .filter((car) => car.make && car.model && car.price && car.range && car.url)
+  .sort((a, b) => (a.make[0] > b.make[0] ? 1 : -1));
