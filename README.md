@@ -1,9 +1,14 @@
-# Find A Dealer Widget iFrame
+# rEVo - Find A Dealer iFrame
+
+Inside the iframe the content size changes so the `height` of the iframe should grow dynamically.
+<br />
+To do this without any JS, we need to wrap
+it in a `div` like the example bellow.
+<br />
+
+But if you are using a library or JS that resizes iframes dynamically, you can probably use the iframe directly without the wrapper div.
 
 ### Example
-
-In order to make the `height` of the iframe gow dynamically, and without any JS, we need to wrap
-it in a `div` like the example bellow, or you can use any JS library or function.
 
 ```html
 <div style="margin: 0px; padding: 0px; overflow: hidden">
