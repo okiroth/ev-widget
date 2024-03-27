@@ -73,6 +73,17 @@ function App() {
     return <Status />;
   }
 
+  var io = 0;
+  setInterval(() => {
+    if ("parentIFrame" in window) {
+      io = io + 100;
+      window.parentIFrame.autoResize(false);
+      window.parentIFrame.size(600 + io, "100%");
+    } else {
+      console.log("parentIFrame not found");
+    }
+  }, 2000);
+
   if (isCalculator) {
     document.title = "rEVo Leasing Calculator";
     return (

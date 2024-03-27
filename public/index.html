@@ -58,10 +58,13 @@
           console.log(
             "----> The ID of the iFrame in the parent page is: " + myId
           );
-          const aux = window.parentIFrame.autoResize(true);
-          console.log("----> aux: ", aux);
         },
       };
+      if ("parentIFrame" in window) {
+        parentIFrame.size(100); // Set height to 100px
+      } else {
+        console.log("---->NOOOOOO window.parentIFrame: ", window.parentIFrame);
+      }
     </script>
     <script src="/js/contentWindow.min.js"></script>
     <!-- Google Tag Manager (noscript) -->
