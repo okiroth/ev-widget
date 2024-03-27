@@ -9,7 +9,7 @@ it in a `div` like the example bellow, or you can use any JS library or function
 <div style="margin: 0px; padding: 0px; overflow: hidden">
   <iframe
     id="iframe_1"
-    src="{{ URL HERE }}"
+    src=" REPLACE URL HERE "
     width="100%"
     height="100px"
     frameborder="0"
