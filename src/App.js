@@ -75,8 +75,14 @@ function App() {
 
   var io = 0;
   setInterval(() => {
+    io = io + 100;
+    const event = new CustomEvent("resize", {
+      bubbles: true,
+      detail: { height: 600 + io },
+    });
+    window.dispatchEvent(event);
+
     if ("parentIFrame" in window) {
-      io = io + 100;
       window.parentIFrame.autoResize(false);
       window.parentIFrame.size(600 + io, "100%");
     } else {
