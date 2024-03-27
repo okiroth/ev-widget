@@ -1,3 +1,7 @@
+.wrapper {
+  font-family: "Gotham" !important;
+}
+
 .calculator_wrapper {
   display: flex;
   flex-direction: row;
@@ -10,11 +14,6 @@
   padding: 30px 15px;
   align-self: stretch;
   max-width: 200px;
-}
-
-.wrapper {
-  padding-bottom: 10px;
-  font-family: "Gotham" !important;
 }
 
 .top_section_calc {
