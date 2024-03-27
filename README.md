@@ -34,9 +34,9 @@ it in a `div` like the example bellow, or you can use any JS library or function
 ### URLs
 
 ```
-https://leasingcalculator.tryrevo.com/
+https://findadealer.tryrevo.com/
 ```
 
 ```
-https://findadealer.tryrevo.com/
+https://leasingcalculator.tryrevo.com/
 ```
